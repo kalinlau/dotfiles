@@ -287,3 +287,6 @@
 	path = vim/pack/vendor/start/vimtex
 	url = https://github.com/lervag/vimtex
 	ignore = dirty
+[submodule "zsh/plugins/powerlevel10k"]
+	path = zsh/plugins/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git

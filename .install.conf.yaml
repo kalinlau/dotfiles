@@ -3,7 +3,7 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.config']
+- clean: ['~', '~/.config', '~/.cache']
 
 - link:
     ~/.agignore:
@@ -29,6 +29,7 @@
     ~/.jupyter/nbconfig/notebook.json: jupyter/notebook.json
     ~/.local/share/jupyter/nbextensions: jupyter/nbextensions
     ~/.pythonrc:
+    ~/.powerlevel10k: zsh/plugins/powerlevel10k
     ~/.rtorrent.rc:
     ~/.screenrc:
     ~/.shell:
