@@ -244,18 +244,23 @@
 [submodule "emacs.d/vendor/racket-mode"]
 	path = emacs.d/vendor/racket-mode
 	url = https://github.com/greghendershott/racket-mode
+	ignore = dirty
 [submodule "emacs.d/vendor/evil-surround"]
 	path = emacs.d/vendor/evil-surround
 	url = https://github.com/emacs-evil/evil-surround
+	ignore = dirty
 [submodule "emacs.d/vendor/goto-chg"]
 	path = emacs.d/vendor/goto-chg
 	url = https://github.com/emacs-evil/goto-chg
+	ignore = dirty
 [submodule "emacs.d/vendor/pos-tip"]
 	path = emacs.d/vendor/pos-tip
 	url = https://github.com/pitkali/pos-tip
+	ignore = dirty
 [submodule "vim/pack/vendor/start/ultisnips"]
 	path = vim/pack/vendor/start/ultisnips
 	url = https://github.com/sirver/ultisnips
+	ignore = dirty
 [submodule "vim/pack/vendor/start/vim-snippets"]
 	path = vim/pack/vendor/start/vim-snippets
 	url = https://github.com/honza/vim-snippets
