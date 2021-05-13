@@ -253,3 +253,9 @@
 [submodule "emacs.d/vendor/pos-tip"]
 	path = emacs.d/vendor/pos-tip
 	url = https://github.com/pitkali/pos-tip
+[submodule "vim/pack/vendor/start/ultisnips"]
+	path = vim/pack/vendor/start/ultisnips
+	url = https://github.com/sirver/ultisnips
+[submodule "vim/pack/vendor/start/vim-snippets"]
+	path = vim/pack/vendor/start/vim-snippets
+	url = https://github.com/honza/vim-snippets
