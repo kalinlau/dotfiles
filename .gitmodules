@@ -188,7 +188,7 @@
 [submodule "emacs.d/vendor/fiplr"]
 	path = emacs.d/vendor/fiplr
 	url = https://github.com/grizzl/fiplr
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/grizzl"]
 	path = emacs.d/vendor/grizzl
 	url = https://github.com/grizzl/grizzl
@@ -208,41 +208,42 @@
 [submodule "emacs.d/vendor/emacs-neotree"]
 	path = emacs.d/vendor/emacs-neotree
 	url = https://github.com/jaypei/emacs-neotree
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/evil-leader"]
 	path = emacs.d/vendor/evil-leader
 	url = https://github.com/cofi/evil-leader
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/company-mode"]
 	path = emacs.d/vendor/company-mode
 	url = https://github.com/company-mode/company-mode
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/linum-relative"]
 	path = emacs.d/vendor/linum-relative
 	url = https://github.com/coldnew/linum-relative
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/company-coq"]
 	path = emacs.d/vendor/company-coq
 	url = https://github.com/cpitclaudel/company-coq
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/company-math"]
 	path = emacs.d/vendor/company-math
 	url = https://github.com/vspinu/company-math
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/math-symbol-lists"]
 	path = emacs.d/vendor/math-symbol-lists
 	url = https://github.com/vspinu/math-symbol-lists
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/yasnippet"]
 	path = emacs.d/vendor/yasnippet
 	url = https://github.com/joaotavora/yasnippet
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/avy"]
 	path = emacs.d/vendor/avy
 	url = https://github.com/abo-abo/avy
 [submodule "emacs.d/vendor/evil-easymotion"]
 	path = emacs.d/vendor/evil-easymotion
 	url = https://github.com/PythonNut/evil-easymotion
+	ignore = dirty
 [submodule "zsh/plugins/dircolors-solarized"]
 	path = shell/plugins/dircolors-solarized
 	url = https://github.com/seebi/dircolors-solarized.git
