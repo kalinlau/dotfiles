@@ -1,4 +1,4 @@
-# Dotfiles [![Build Status](https://github.com/anishathalye/dotfiles/workflows/CI/badge.svg)](https://github.com/anishathalye/dotfiles/actions?query=workflow%3ACI)
+# Dotfiles 
 
 After cloning this repo, run `install` to automatically set up the development
 environment. Note that the install script is idempotent: it can safely be run
@@ -31,6 +31,6 @@ License
 Copyright (c) 2013-2021 Anish Athalye. Released under the MIT License. See
 [LICENSE.md][license] for details.
 
-[dotfiles-local]: https://github.com/anishathalye/dotfiles-local
+[dotfiles-local]: https://github.com/limtete/dotfiles-local
 [dotbot]: https://github.com/anishathalye/dotbot
 [license]: LICENSE.md
