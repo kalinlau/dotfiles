@@ -36,6 +36,7 @@
     ~/.tmux.conf:
     ~/.vim:
     ~/.vimrc:
+    ~/.zprofile:
     ~/.zsh:
     ~/.zshrc:
 
