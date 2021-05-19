@@ -293,3 +293,6 @@
 [submodule "zsh/plugins/zsh-autosuggestions"]
 	path = zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "vim/pack/vendor/start/vim-im-select"]
+	path = vim/pack/vendor/start/vim-im-select
+	url = https://github.com/brglng/vim-im-select.git
