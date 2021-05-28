@@ -49,11 +49,11 @@
   - git submodule sync --recursive
   # the following have to run after linking ~/.gitconfig
   - git update-submodules
-  - >
-    git cleanall -f
-    emacs.d/vendor/
-    irssi/scripts/vendor/
-    jupyter/nbextensions/
-    shell/plugins/
-    vim/pack/vendor/start/
-    zsh/plugins/
+  #- >
+    #git cleanall -f
+    #emacs.d/vendor/
+    #irssi/scripts/vendor/
+    #jupyter/nbextensions/
+    #shell/plugins/
+    #vim/pack/vendor/start/
+    #zsh/plugins/
