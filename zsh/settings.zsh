@@ -29,7 +29,7 @@ KEYTIMEOUT=1 # corresponds to 10ms
 export EDITOR=vim
 
 # Use vim style line editing in zsh
-bindkey -v
+bindkey -e
 # Movement
 bindkey -a 'gg' beginning-of-buffer-or-history
 bindkey -a 'G' end-of-buffer-or-history
