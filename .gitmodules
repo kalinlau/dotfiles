@@ -22,10 +22,6 @@
 	path = vim/pack/vendor/start/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
 	ignore = untracked
-[submodule "vim/bundle/vim-fugitive"]
-	path = vim/pack/vendor/start/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-	ignore = untracked
 [submodule "vim/bundle/ctrlp.vim"]
 	path = vim/pack/vendor/start/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim
