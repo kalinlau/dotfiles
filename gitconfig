@@ -64,6 +64,7 @@
 	mnemonicPrefix = true
 	wordRegex = "[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+"
 	compactionHeuristic = true
+	tool = vimdiff
 
 [color]
 	ui = auto
@@ -90,6 +91,7 @@
 
 [mergetool]
 	keepBackup = false
+	prompt = false
 
 [push]
 	default = upstream
@@ -123,3 +125,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[difftool]
+	prompt = false
