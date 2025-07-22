@@ -5,182 +5,182 @@
 [submodule "vim/bundle/vim-colors-solarized"]
 	path = vim/pack/vendor/start/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-scala"]
 	path = vim/pack/vendor/start/vim-scala
 	url = https://github.com/derekwyatt/vim-scala.git
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-markdown"]
 	path = vim/pack/vendor/start/vim-markdown
 	url = https://github.com/tpope/vim-markdown
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-git"]
 	path = vim/pack/vendor/start/vim-git
 	url = https://github.com/tpope/vim-git.git
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/pack/vendor/start/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/ctrlp.vim"]
 	path = vim/pack/vendor/start/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-bundler"]
 	path = vim/pack/vendor/start/vim-bundler
 	url = https://github.com/tpope/vim-bundler.git
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-coffee-script"]
 	path = vim/pack/vendor/start/vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-surround"]
 	path = vim/pack/vendor/start/vim-surround
 	url = https://github.com/tpope/vim-surround
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-json"]
 	path = vim/pack/vendor/start/vim-json
 	url = https://github.com/elzr/vim-json
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/webapi-vim"]
 	path = vim/pack/vendor/start/webapi-vim
 	url = https://github.com/mattn/webapi-vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/gist-vim"]
 	path = vim/pack/vendor/start/gist-vim
 	url = https://github.com/mattn/gist-vim.git
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/gundo.vim"]
 	path = vim/pack/vendor/start/gundo.vim
 	url = https://github.com/sjl/gundo.vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-liquid"]
 	path = vim/pack/vendor/start/vim-liquid
 	url = https://github.com/tpope/vim-liquid
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/supertab"]
 	path = vim/pack/vendor/start/supertab
 	url = https://github.com/ervandew/supertab
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/editorconfig-vim"]
 	path = vim/pack/vendor/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/rust.vim"]
 	path = vim/pack/vendor/start/rust.vim
 	url = https://github.com/wting/rust.vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-tmux"]
 	path = vim/pack/vendor/start/vim-tmux
 	url = https://github.com/tmux-plugins/vim-tmux
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/haskell-vim"]
 	path = vim/pack/vendor/start/haskell-vim
 	url = https://github.com/neovimhaskell/haskell-vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/ack.vim"]
 	path = vim/pack/vendor/start/ack.vim
 	url = https://github.com/mileszs/ack.vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/syntastic"]
 	path = vim/pack/vendor/start/syntastic
 	url = https://github.com/scrooloose/syntastic
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-signature"]
 	path = vim/pack/vendor/start/vim-signature
 	url = https://github.com/kshenoy/vim-signature
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/nerdtree"]
 	path = vim/pack/vendor/start/nerdtree
 	url = https://github.com/scrooloose/nerdtree
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/incsearch.vim"]
 	path = vim/pack/vendor/start/incsearch.vim
 	url = https://github.com/haya14busa/incsearch.vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-easymotion"]
 	path = vim/pack/vendor/start/vim-easymotion
 	url = https://github.com/easymotion/vim-easymotion
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/incsearch-easymotion.vim"]
 	path = vim/pack/vendor/start/incsearch-easymotion.vim
 	url = https://github.com/haya14busa/incsearch-easymotion.vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-argwrap"]
 	path = vim/pack/vendor/start/vim-argwrap
 	url = https://github.com/FooSoft/vim-argwrap
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/nerdcommenter"]
 	path = vim/pack/vendor/start/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-vagrant"]
 	path = vim/pack/vendor/start/vim-vagrant
 	url = https://github.com/hashivim/vim-vagrant
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/typescript-vim"]
 	path = vim/pack/vendor/start/typescript-vim
 	url = https://github.com/leafgarland/typescript-vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-buffergator"]
 	path = vim/pack/vendor/start/vim-buffergator
 	url = https://github.com/jeetsukumaran/vim-buffergator
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-solidity"]
 	path = vim/pack/vendor/start/vim-solidity
 	url = https://github.com/tomlion/vim-solidity
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/lightline.vim"]
 	path = vim/pack/vendor/start/lightline.vim
 	url = https://github.com/itchyny/lightline.vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-over"]
 	path = vim/pack/vendor/start/vim-over
 	url = https://github.com/osyo-manga/vim-over
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/smarty.vim"]
 	path = vim/pack/vendor/start/smarty.vim
 	url = https://github.com/blueyed/smarty.vim
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-smt2"]
 	path = vim/pack/vendor/start/vim-smt2
 	url = https://github.com/bohlender/vim-smt2
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/bundle/vim-racket"]
 	path = vim/pack/vendor/start/vim-racket
 	url = https://github.com/wlangstroth/vim-racket
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/pack/vendor/start/vim-jsx-pretty"]
 	path = vim/pack/vendor/start/vim-jsx-pretty
 	url = https://github.com/MaxMEllon/vim-jsx-pretty
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/pack/vendor/start/vim-js"]
 	path = vim/pack/vendor/start/vim-js
 	url = https://github.com/yuezk/vim-js
-	ignore = untracked
+	ignore = dirty
 [submodule "vim/pack/vendor/start/vim-toml"]
 	path = vim/pack/vendor/start/vim-toml
 	url = https://github.com/cespare/vim-toml
 [submodule "emacs.d/vendor/use-package"]
 	path = emacs.d/vendor/use-package
 	url = https://github.com/jwiegley/use-package
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/PG"]
 	path = emacs.d/vendor/PG
 	url = https://github.com/ProofGeneral/PG
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/evil"]
 	path = emacs.d/vendor/evil
 	url = https://github.com/emacs-evil/evil
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/editorconfig-emacs"]
 	path = emacs.d/vendor/editorconfig-emacs
 	url = https://github.com/editorconfig/editorconfig-emacs
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/emacs-color-theme-solarized"]
 	path = emacs.d/vendor/emacs-color-theme-solarized
 	url = https://github.com/sellout/emacs-color-theme-solarized
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/fiplr"]
 	path = emacs.d/vendor/fiplr
 	url = https://github.com/grizzl/fiplr
@@ -188,19 +188,19 @@
 [submodule "emacs.d/vendor/grizzl"]
 	path = emacs.d/vendor/grizzl
 	url = https://github.com/grizzl/grizzl
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/packed"]
 	path = emacs.d/vendor/packed
 	url = https://github.com/tarsius/packed
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/dash.el"]
 	path = emacs.d/vendor/dash.el
 	url = https://github.com/magnars/dash.el
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/auto-compile"]
 	path = emacs.d/vendor/auto-compile
 	url = https://github.com/tarsius/auto-compile
-	ignore = untracked
+	ignore = dirty
 [submodule "emacs.d/vendor/emacs-neotree"]
 	path = emacs.d/vendor/emacs-neotree
 	url = https://github.com/jaypei/emacs-neotree
