@@ -109,7 +109,8 @@
 [user]
 	useConfigOnly = true
 	name = LAU Kalin
-	email = liujialin_crl@outlook.com
+	email = laukalin24@gmail.com
+	signingkey = 61279CDF7E3E5A5F
 
 [http]
 	cookieFile = ~/.gitcookies
@@ -127,3 +128,7 @@
 	required = true
 [difftool]
 	prompt = false
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true

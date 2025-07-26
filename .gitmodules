@@ -289,3 +289,8 @@
 [submodule "zsh/plugins/zsh-autosuggestions"]
 	path = zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
+	ignore = dirty
+[submodule "vim/pack/vendor/start/vim-visual-multi"]
+	path = vim/pack/vendor/start/vim-visual-multi
+	url = https://github.com/mg979/vim-visual-multi.git
+	ignore = dirty

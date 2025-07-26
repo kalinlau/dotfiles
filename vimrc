@@ -124,7 +124,7 @@ function ToggleMovementByDisplayLines()
 endfunction
 
 " toggle relative numbering
-nnoremap <C-n> :set rnu!<CR>
+nnoremap <A-N> :set rnu!<CR>
 
 " save read-only files
 command -nargs=0 Sudow w !sudo tee % >/dev/null
