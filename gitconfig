@@ -85,6 +85,7 @@
 [merge]
 	defaultToUpstream = true
 	tool = vimdiff
+	conflictStyle = zdiff3
 
 [pull]
 	ff = only
@@ -117,6 +118,7 @@
 
 [core]
 	excludesfile = ~/.gitignore_global
+	pager = delta
 
 # Allow local customizations in the .gitconfig_local file
 [include]
@@ -132,3 +134,11 @@
 	gpgsign = true
 [tag]
 	gpgSign = true
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	dark = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = TwoDark
