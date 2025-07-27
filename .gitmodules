@@ -82,10 +82,6 @@
 	path = vim/pack/vendor/start/ack.vim
 	url = https://github.com/mileszs/ack.vim
 	ignore = dirty
-[submodule "vim/bundle/syntastic"]
-	path = vim/pack/vendor/start/syntastic
-	url = https://github.com/scrooloose/syntastic
-	ignore = dirty
 [submodule "vim/bundle/vim-signature"]
 	path = vim/pack/vendor/start/vim-signature
 	url = https://github.com/kshenoy/vim-signature
