@@ -205,13 +205,6 @@ set tags^=.git/tags;~
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
 
-" input methods
-" autoexchange between normanl modes and insert mode.
-" https://yzlnew.com/2019/01/vim-imselect/
-if !has('gui_running')
-    set runtimepath+='~/.vim/pack/vender/start/vim-im-select'
-    let g:im_select_default = 'com.apple.keylayout.ABC' 
-endif
 
 "---------------------
 " Local customizations
