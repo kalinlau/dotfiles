@@ -290,3 +290,6 @@
 	path = vim/pack/vendor/start/vim-visual-multi
 	url = https://github.com/mg979/vim-visual-multi.git
 	ignore = dirty
+[submodule "vim/pack/vendor/start/ale"]
+	path = vim/pack/vendor/start/ale
+	url = https://github.com/dense-analysis/ale.git
