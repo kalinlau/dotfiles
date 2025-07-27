@@ -205,6 +205,58 @@ set tags^=.git/tags;~
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
 
+" ----- Asynchronous Lint Engine -----
+" Enable linting on save (default is on-the-fly)
+" You might want to set this to 0 if you prefer only on-the-fly linting
+let g:ale_lint_on_save = 0
+
+" Set symbols for errors and warnings in the sign column
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
+
+" Show messages in the command line/status line
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_echo_msg_error_str = 'Error'
+let g:ale_echo_msg_warning_str = 'Warning'
+
+" Disable completion if another completion plugin used (e.g., deoplete)
+" If you want ALE's built-in completion, set this to 1
+let g:ale_completion_enabled = 0
+
+" Configure linters per filetype
+let g:ale_linters = {
+\   'python': ['black', 'pylint'],
+\   'javascript': ['eslint'],
+\   'html': ['htmlhint'],
+\   'css': ['stylelint'],
+\}
+
+" Configure fixers (formatters) per filetype
+" These tools can automatically fix issues.
+" You can run :ALEFix to apply them.
+let g:ale_fixers = {
+\   'python': ['black'],
+\   'javascript': ['prettier', 'eslint'],
+\}
+
+" Automatically fix files on save (requires fixers configured above)
+let g:ale_fix_on_save = 0 " Set to 1 to enable auto-fixing on save
+
+" Jump to the next/previous error
+nnoremap <silent> ]e <Plug>(ale_next_error)
+nnoremap <silent> [e <Plug>(ale_previous_error)
+
+" Jump to the next/previous warning
+nnoremap <silent> ]w <Plug>(ale_next_warning)
+nnoremap <silent> [w <Plug>(ale_previous_warning)
+
+" Jump to the next/previous diagnostic (error or warning)
+nnoremap <silent> ]d <Plug>(ale_next_wrap)
+nnoremap <silent> [d <Plug>(ale_previous_wrap)
+
+" 80 column layout highlight
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
 
 "---------------------
 " Local customizations
