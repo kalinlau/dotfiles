@@ -10,6 +10,13 @@ machine-specific configuration, is located in [dotfiles-local][dotfiles-local].
 
 Dotfiles uses [Dotbot][dotbot] for installation.
 
+Installation
+------------
+
+Try recursive clone every submodule with following commands.
+
+> git clone --recursive --remote-submodules <URL>
+
 Making Local Customizations
 ---------------------------
 
@@ -31,6 +38,6 @@ License
 Copyright (c) 2013-2021 Anish Athalye. Released under the MIT License. See
 [LICENSE.md][license] for details.
 
-[dotfiles-local]: https://github.com/limtete/dotfiles-local
+[dotfiles-local]: https://github.com/kalinlau/dotfiles-local
 [dotbot]: https://github.com/anishathalye/dotbot
 [license]: LICENSE.md
