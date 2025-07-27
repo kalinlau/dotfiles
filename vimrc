@@ -254,6 +254,32 @@ nnoremap <silent> [w <Plug>(ale_previous_warning)
 nnoremap <silent> ]d <Plug>(ale_next_wrap)
 nnoremap <silent> [d <Plug>(ale_previous_wrap)
 
+" Automatically fix issues in the current buffer using configured fixers
+" <leader><leader>f for "fix"
+nnoremap <leader><leader>f :ALEFix<CR>
+
+" Open the location list with all diagnostics for the current buffer
+" <leader><leader>L (uppercase L) for "List diagnostics"
+nnoremap <leader><leader>L :ALEDiagnosticList<CR>
+
+" Toggle ALE linting globally (on/off)
+" <leader><leader>t for "toggle"
+nnoremap <leader><leader>t :ALEToggle<CR>
+
+" Toggle ALE linting for the current buffer (on/off)
+" <leader><leader>T (uppercase T) for "Toggle buffer"
+nnoremap <leader><leader>T :ALEToggleBuffer<CR>
+
+" Show ALE information (useful for debugging and seeing active linters)
+" <leader><leader>i for "info"
+nnoremap <leader><leader>i :ALEInfo<CR>
+
+" Clear diagnostics for current buffer
+nnoremap <leader><leader>C :ALEReset<CR>
+" Clear diagnostics for all buffers
+nnoremap <leader><leader>A :ALEResetBuffer<CR> 
+
+
 " 80 column layout highlight
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
