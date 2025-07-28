@@ -206,7 +206,6 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
     \ quit | endif
 
 " ----- Asynchronous Lint Engine -----
-let g:ale_lint_on_save = 0
 let g:ale_set_signs = 1
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚡'
@@ -231,8 +230,10 @@ let g:ale_fixers = {
 \   'python': ['yapf'],
 \}
 
-" Automatically fix files on save (requires fixers configured above)
-let g:ale_fix_on_save = 0 " Set to 1 to enable auto-fixing on save
+" Fix files on save (Requires fixers configured above)
+let g:ale_fix_on_save = 1 
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_save = 1
 
 " Jump to the next/previous error
 nnoremap <silent> ]e <Plug>(ale_next_error)
@@ -246,16 +247,13 @@ nnoremap <silent> [w <Plug>(ale_previous_warning)
 nnoremap <silent> ]d <Plug>(ale_next_wrap)
 nnoremap <silent> [d <Plug>(ale_previous_wrap)
 
-" Automatically fix issues in the current buffer using configured fixers
-" <leader><leader>f for "fix"
+" Automatically fix issues in the current buffer.
 nnoremap <leader><leader>f :ALEFix<CR>
 
-" Open the location list with all diagnostics for the current buffer
-" <leader><leader>L (uppercase L) for "List diagnostics"
-nnoremap <leader><leader>L :ALEDiagnosticList<CR>
+" Automatically lint issues in the current buffer.
+nnoremap <leader><leader>l :ALELint<CR>
 
 " Toggle ALE linting globally (on/off)
-" <leader><leader>t for "toggle"
 nnoremap <leader><leader>t :ALEToggle<CR>
 
 " Toggle ALE linting for the current buffer (on/off)
