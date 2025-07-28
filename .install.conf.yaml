@@ -12,6 +12,7 @@
     ~/.bash:
     ~/.bash_profile:
     ~/.bashrc:
+    ~/.config/yapf/style: yapf.conf
     ~/.dotfiles: ''
     ~/.emacs.d:
     ~/.emacs:

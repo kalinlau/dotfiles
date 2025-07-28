@@ -225,7 +225,8 @@ let g:ale_completion_enabled = 0
 
 " Configure linters per filetype
 let g:ale_linters = {
-\   'python': ['black', 'pylint'],
+\   'python': ['pylint'],
+\   'makrdown': ['vale'],
 \   'javascript': ['eslint'],
 \   'html': ['htmlhint'],
 \   'css': ['stylelint'],
@@ -235,8 +236,9 @@ let g:ale_linters = {
 " These tools can automatically fix issues.
 " You can run :ALEFix to apply them.
 let g:ale_fixers = {
-\   'python': ['black'],
-\   'javascript': ['prettier', 'eslint'],
+\   'python': ['yapf'],
+\   'markdown': ['vale'],
+\   'javascript': ['prettier'],
 \}
 
 " Automatically fix files on save (requires fixers configured above)
