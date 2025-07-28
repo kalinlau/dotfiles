@@ -1,0 +1,12 @@
+{
+  "markdown": {
+    "filters": "markdown",
+    "profile": "markdown",
+    "snippets": {
+      "rlr": "<span style=\"color:IndianRed\">${0}</span>",
+      "rly": "<span style=\"color:Gold\">${0}</span>",
+      "rlb": "<span style=\"color:SkyBlue\">${0}</span>",
+      "rlg": "<span style=\"color:LimeGreen\">${0}</span>"
+    }
+  }
+}

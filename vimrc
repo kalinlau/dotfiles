@@ -24,7 +24,7 @@ elseif &t_Co < 256
     set nocursorline " looks bad in this mode
 else
     set background=dark
-    let g:solarized_termcolors=256 " instead of 16 color with mapping in terminal
+    let g:solarized_termcolors=256
     colorscheme solarized
     " customized colors
     highlight SignColumn ctermbg=234
@@ -55,7 +55,7 @@ set laststatus=2
 set backspace=indent,eol,start " allow backspacing over everything
 set timeout timeoutlen=1000 ttimeoutlen=100 " fix slow O inserts
 set lazyredraw " skip redrawing screen in some cases
-set autochdir " automatically set current directory to directory of last opened file
+set autochdir " automatically set current dir to dir of last opened file
 set hidden " allow auto-hiding of edited buffers
 set history=8192 " more history
 set nojoinspaces " suppress inserting two spaces between sentences
@@ -133,79 +133,7 @@ command -nargs=0 Sudow w !sudo tee % >/dev/null
 " Plugin configuration
 "---------------------
 
-" nerdtree
-nnoremap <Leader>n :NERDTreeToggle<CR>
-nnoremap <Leader>f :NERDTreeFind<CR>
-
-" buffergator
-let g:buffergator_suppress_keymaps = 1
-nnoremap <Leader>b :BuffergatorToggle<CR>
-
-" gundo
-nnoremap <Leader>u :GundoToggle<CR>
-if has('python3')
-    let g:gundo_prefer_python3 = 1
-endif
-
-" ctrlp
-nnoremap ; :CtrlPBuffer<CR>
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_show_hidden = 1
-
-" ag / ack.vim
-command -nargs=+ Gag Gcd | Ack! <args>
-nnoremap K :Gag "\b<C-R><C-W>\b"<CR>:cw<CR>
-if executable('ag')
-    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-    let g:ackprg = 'ag --vimgrep'
-endif
-
-" easymotion
-map <Space> <Plug>(easymotion-prefix)
-
-" incsearch
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-
-" incsearch-easymotion
-map z/ <Plug>(incsearch-easymotion-/)
-map z? <Plug>(incsearch-easymotion-?)
-map zg/ <Plug>(incsearch-easymotion-stay)
-
-" argwrap
-nnoremap <Leader>w :ArgWrap<CR>
-
-noremap <Leader>x :OverCommandLine<CR>
-
-" markdown
-let g:markdown_fenced_languages = [
-    \ 'bash=sh',
-    \ 'c',
-    \ 'coffee',
-    \ 'erb=eruby',
-    \ 'javascript',
-    \ 'json',
-    \ 'perl',
-    \ 'python',
-    \ 'ruby',
-    \ 'yaml',
-    \ 'go',
-    \ 'racket',
-    \ 'haskell',
-\]
-let g:markdown_syntax_conceal = 0
-let g:markdown_folding = 1
-
-" fugitive
-set tags^=.git/tags;~
-
-" NERDTree
-" Exit Vim if NERDTree is the only window left.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ quit | endif
-
-" ----- Asynchronous Lint Engine -----
+" ----- ale -----
 let g:ale_set_signs = 1
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚡'
@@ -219,6 +147,7 @@ let g:ale_linters = {
 \   'css': ['stylelint'],
 \   'html': ['htmlhint'],
 \   'javascript': ['eslint'],
+\   'json': ['jq'],
 \   'markdown': ['markdownlint'],
 \   'python': ['pylint'],
 \}
@@ -226,6 +155,7 @@ let g:ale_linters = {
 " Fixers / Formatters per filetype
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
+\   'json': ['prettier'],
 \   'markdown': ['prettier'],
 \   'python': ['yapf'],
 \}
@@ -248,27 +178,107 @@ nnoremap <silent> ]d <Plug>(ale_next_wrap)
 nnoremap <silent> [d <Plug>(ale_previous_wrap)
 
 " Automatically fix issues in the current buffer.
-nnoremap <leader><leader>f :ALEFix<CR>
+nnoremap <silent> <leader><leader>f :ALEFix<CR>
 
 " Automatically lint issues in the current buffer.
-nnoremap <leader><leader>l :ALELint<CR>
+nnoremap <silent> <leader><leader>l :ALELint<CR>
 
 " Toggle ALE linting globally (on/off)
-nnoremap <leader><leader>t :ALEToggle<CR>
+nnoremap <silent> <leader><leader>t :ALEToggle<CR>
 
 " Toggle ALE linting for the current buffer (on/off)
 " <leader><leader>T (uppercase T) for "Toggle buffer"
-nnoremap <leader><leader>T :ALEToggleBuffer<CR>
+nnoremap <silent> <leader><leader>T :ALEToggleBuffer<CR>
 
 " Show ALE information (useful for debugging and seeing active linters)
 " <leader><leader>i for "info"
-nnoremap <leader><leader>i :ALEInfo<CR>
+nnoremap <silent> <leader><leader>i :ALEInfo<CR>
 
 " Clear diagnostics for current buffer
-nnoremap <leader><leader>C :ALEReset<CR>
+nnoremap <silent> <leader><leader>C :ALEReset<CR>
 " Clear diagnostics for all buffers
-nnoremap <leader><leader>A :ALEResetBuffer<CR> 
+nnoremap <silent> <leader><leader>A :ALEResetBuffer<CR> 
 
+" ----- ag / ack.vim -----
+command -nargs=+ Gag Gcd | Ack! <args>
+nnoremap K :Gag "\b<C-R><C-W>\b"<CR>:cw<CR>
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+    let g:ackprg = 'ag --vimgrep'
+endif
+
+"----- argwrap -----
+nnoremap <Leader>w :ArgWrap<CR>
+
+"----- buffergator -----
+let g:buffergator_suppress_keymaps = 1
+nnoremap <Leader>b :BuffergatorToggle<CR>
+
+"----- ctrlp -----
+nnoremap ; :CtrlPBuffer<CR>
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_show_hidden = 1
+
+" ----- emmet -----
+" enable globally for any filetype.
+let g:user_emmet_install_global = 1
+let g:user_emmet_mode='inv'
+let g:user_emmet_leader_key='<tab>'
+let g:user_emmet_settings = webapi#json#decode(
+\    join(readfile(expand('~/.config/emmet/snippets_custom.json')), "\n")
+\)
+
+"----- easymotion -----
+map <Space> <Plug>(easymotion-prefix)
+
+"----- fugitive -----
+set tags^=.git/tags;~
+
+"----- gundo -----
+nnoremap <Leader>u :GundoToggle<CR>
+if has('python3')
+    let g:gundo_prefer_python3 = 1
+endif
+
+"----- incsearch -----
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+"----- incsearch-easymotion -----
+map z/ <Plug>(incsearch-easymotion-/)
+map z? <Plug>(incsearch-easymotion-?)
+map zg/ <Plug>(incsearch-easymotion-stay)
+
+"----- nerdtree -----
+nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>f :NERDTreeFind<CR>
+
+" exit vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 
+    \ && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+"----- vim-markdown -----
+let g:markdown_fenced_languages = [
+    \ 'bash=sh',
+    \ 'c',
+    \ 'coffee',
+    \ 'erb=eruby',
+    \ 'javascript',
+    \ 'json',
+    \ 'perl',
+    \ 'python',
+    \ 'ruby',
+    \ 'yaml',
+    \ 'go',
+    \ 'racket',
+    \ 'haskell',
+\]
+let g:markdown_syntax_conceal = 0
+let g:markdown_folding = 1
+
+" ----- vim-over -----
+noremap <Leader>x :OverCommandLine<CR>
 
 " 80 column layout highlight
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929

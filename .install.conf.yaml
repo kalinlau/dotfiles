@@ -13,6 +13,7 @@
     ~/.bash_profile:
     ~/.bashrc:
     ~/.config/yapf/style: yapf.conf
+    ~/.config/emmet/snippets_custom.json:
     ~/.dotfiles: ''
     ~/.emacs.d:
     ~/.emacs:
