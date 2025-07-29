@@ -178,28 +178,29 @@ nnoremap <silent> ]d <Plug>(ale_next_wrap)
 nnoremap <silent> [d <Plug>(ale_previous_wrap)
 
 " Automatically fix issues in the current buffer.
-nnoremap <leader><leader>f :ALEFix<CR>
+nnoremap <Leader><Leader>f :ALEFix<CR>
 
 " Automatically lint issues in the current buffer.
-nnoremap <leader><leader>l :ALELint<CR>
+nnoremap <Leader><Leader>l :ALELint<CR>
 
 " Toggle ALE linting globally (on/off)
-nnoremap <leader><leader>t :ALEToggle<CR>
+nnoremap <Leader><Leader>t :ALEToggle<CR>
 
 " Toggle ALE linting for the current buffer (on/off)
-" <leader><leader>T (uppercase T) for "Toggle buffer"
-nnoremap <leader><leader>T :ALEToggleBuffer<CR>
+" <Leader><Leader>T (uppercase T) for "Toggle buffer"
+nnoremap <Leader><Leader>T :ALEToggleBuffer<CR>
 
 " Show ALE information (useful for debugging and seeing active linters)
-" <leader><leader>i for "info"
-nnoremap <leader><leader>i :ALEInfo<CR>
+" <Leader><Leader>i for "info"
+nnoremap <Leader><Leader>i :ALEInfo<CR>
 
 " Clear diagnostics for current buffer
-nnoremap <leader><leader>C :ALEReset<CR>
+nnoremap <Leader><Leader>C :ALEReset<CR>
 " Clear diagnostics for all buffers
-nnoremap <leader><leader>A :ALEResetBuffer<CR> 
+nnoremap <Leader><Leader>A :ALEResetBuffer<CR> 
 
 " ----- ag / ack.vim -----
+nnoremap <Leader>a :Ack!<Space>
 command -nargs=+ Gag Gcd | Ack! <args>
 nnoremap K :Gag "\b<C-R><C-W>\b"<CR>:cw<CR>
 if executable('ag')
