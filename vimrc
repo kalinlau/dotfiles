@@ -178,26 +178,26 @@ nnoremap <silent> ]d <Plug>(ale_next_wrap)
 nnoremap <silent> [d <Plug>(ale_previous_wrap)
 
 " Automatically fix issues in the current buffer.
-nnoremap <silent> <leader><leader>f :ALEFix<CR>
+nnoremap <leader><leader>f :ALEFix<CR>
 
 " Automatically lint issues in the current buffer.
-nnoremap <silent> <leader><leader>l :ALELint<CR>
+nnoremap <leader><leader>l :ALELint<CR>
 
 " Toggle ALE linting globally (on/off)
-nnoremap <silent> <leader><leader>t :ALEToggle<CR>
+nnoremap <leader><leader>t :ALEToggle<CR>
 
 " Toggle ALE linting for the current buffer (on/off)
 " <leader><leader>T (uppercase T) for "Toggle buffer"
-nnoremap <silent> <leader><leader>T :ALEToggleBuffer<CR>
+nnoremap <leader><leader>T :ALEToggleBuffer<CR>
 
 " Show ALE information (useful for debugging and seeing active linters)
 " <leader><leader>i for "info"
-nnoremap <silent> <leader><leader>i :ALEInfo<CR>
+nnoremap <leader><leader>i :ALEInfo<CR>
 
 " Clear diagnostics for current buffer
-nnoremap <silent> <leader><leader>C :ALEReset<CR>
+nnoremap <leader><leader>C :ALEReset<CR>
 " Clear diagnostics for all buffers
-nnoremap <silent> <leader><leader>A :ALEResetBuffer<CR> 
+nnoremap <leader><leader>A :ALEResetBuffer<CR> 
 
 " ----- ag / ack.vim -----
 command -nargs=+ Gag Gcd | Ack! <args>
@@ -221,18 +221,22 @@ let g:ctrlp_show_hidden = 1
 
 " ----- emmet -----
 " enable globally for any filetype.
-let g:user_emmet_install_global = 1
 let g:user_emmet_mode='inv'
-let g:user_emmet_leader_key='<tab>'
+let g:user_emmet_leader_key=','
 let g:user_emmet_settings = webapi#json#decode(
 \    join(readfile(expand('~/.config/emmet/snippets_custom.json')), "\n")
 \)
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,markdown,xml,xsl,scss,sass EmmetInstall
 
 "----- easymotion -----
 map <Space> <Plug>(easymotion-prefix)
 
 "----- fugitive -----
 set tags^=.git/tags;~
+
+" fzf
+set rtp+=/opt/homebrew/opt/fzf
 
 "----- gundo -----
 nnoremap <Leader>u :GundoToggle<CR>
@@ -276,6 +280,16 @@ let g:markdown_fenced_languages = [
 \]
 let g:markdown_syntax_conceal = 0
 let g:markdown_folding = 1
+
+" ultisnips
+" Trigger configuration.
+" You need to change this to something other than <tab>
+" if you use one of the following:
+" " - https://github.com/Valloric/YouCompleteMe
+" " - https://github.com/nvim-lua/completion-nvim
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " ----- vim-over -----
 noremap <Leader>x :OverCommandLine<CR>
