@@ -14,9 +14,17 @@ Dotfiles uses [Dotbot][dotbot] for installation.
 
 ## Installation
 
-Try recursive clone every submodule with following commands.
+- Try recursive clone every submodule with following commands.
 
 > git clone --recursive --remote-submodules <URL>
+
+- To remove submodules, run followings:
+
+```zsh
+git submodule deinit -f <path_to_submodule>
+git rm --cached <path_to_submodule>
+rm -rf .git/modules/<path_to_submodule> # if exists.
+```
 
 ## Making Local Customizations
 
