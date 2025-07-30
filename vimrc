@@ -219,6 +219,7 @@ nnoremap <Leader>b :BuffergatorToggle<CR>
 nnoremap ; :CtrlPBuffer<CR>
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_regexp = 1
 
 " ----- emmet -----
 " enable globally for any filetype.
@@ -235,9 +236,6 @@ map <Space> <Plug>(easymotion-prefix)
 
 "----- fugitive -----
 set tags^=.git/tags;~
-
-" fzf
-set rtp+=/opt/homebrew/opt/fzf
 
 "----- gundo -----
 nnoremap <Leader>u :GundoToggle<CR>
