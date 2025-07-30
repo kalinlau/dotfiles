@@ -17,6 +17,8 @@
     ~/.dotfiles: ''
     ~/.emacs.d:
     ~/.emacs:
+    ~/.fzf:
+    ~/.fzfrc:
     ~/.gitconfig:
     ~/.gitignore_global:
     ~/.gnupg/gpg.conf:

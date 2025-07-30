@@ -1,0 +1,67 @@
+#
+# Fuzzy Finder Configuration File
+#
+# @author: LAU Kalin
+# @date: 7/25/25
+# @usage: append to `zshrc_local_after`
+#
+# ==============================================================================
+
+# Preview file content using bat (https://github.com/sharkdp/bat)
+export FZF_CTRL_T_OPTS="
+  --style full
+  --border --padding 1,2
+  --border-label ' Fuzzy Finder '
+  --input-label ' IN '
+  --preview 'bat -n --color=always {}'
+  --color 'border:#aaaaaa,label:#cccccc'
+  --color 'preview-border:#9999cc,preview-label:#ccccff'
+  --color 'input-border:#996666,input-label:#ffcccc'
+  --color 'list-border:#669966,list-label:#99cc99'"
+
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip -sel clip)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
+
+# Print tree structure in the preview window
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules
+  --preview 'tree -c {}'"
+
+# Set `fd` as the default source for fzf
+export FZF_DEFAULT_COMMAND='fd --strip-cwd-prefix=never'
+export FZF_CTRL_T_COMMAND="fd --type f --strip-cwd-prefix=never \
+    --hidden --follow --exclude .git"
+
+# Function: ff
+# Description: extended fzf with extensive styling and dynamic labels
+#              Requires `fzf` and `fd` installed and `fzf-preview.sh`
+#              available in PATH.
+function ff {
+ fzf --style full \
+    --border --padding 1,2 \
+    --border-label ' Fuzzy Finder Fmode '\
+    --input-label ' In ' \
+    --header-label ' File Type ' \
+    --preview 'fzf-preview.sh {}' \
+    --bind 'result:transform-list-label:
+        if [[ -z $FZF_QUERY ]]; then
+          echo " $FZF_MATCH_COUNT items "
+        else
+          echo " $FZF_MATCH_COUNT matches for [$FZF_QUERY] "
+        fi' \
+    --bind 'focus:transform-preview-label:[[ -n {} ]] \
+        && printf " Preview [%s] " {}' \
+    --bind 'focus:+transform-header:file --brief {} \
+        || echo "No file selected"' \
+    --bind 'ctrl-r:change-list-label( Reloading the list )\
+        +reload(sleep 2; git ls-files)' \
+    --color 'border:#aaaaaa,label:#cccccc' \
+    --color 'preview-border:#9999cc,preview-label:#ccccff' \
+    --color 'list-border:#669966,list-label:#99cc99' \
+    --color 'input-border:#996666,input-label:#ffcccc' \
+    --color 'header-border:#6699cc,header-label:#99ccff'
+}
+

@@ -296,3 +296,6 @@
 [submodule "vim/pack/vendor/start/vim-emmet"]
 	path = vim/pack/vendor/start/vim-emmet
 	url = https://github.com/mattn/emmet-vim.git
+[submodule "fzf"]
+	path = fzf
+	url = https://github.com/junegunn/fzf.git
