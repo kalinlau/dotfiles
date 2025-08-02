@@ -26,7 +26,7 @@ source ~/.shell/external.sh
 # Aliases
 source ~/.shell/aliases.sh
 
-# Custom prompt
+# Customization
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # Or use Anish Athalye's color scheme.
 if [[ -e ~/.powerlevel10k/powerlevel10k.zsh-theme ]]; then
@@ -35,6 +35,13 @@ if [[ -e ~/.powerlevel10k/powerlevel10k.zsh-theme ]]; then
 else
     source ~/.zsh/prompt.zsh
 fi
+
+# Fuzzy Finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -f ~/.fzfrc ]; then
+    source ~/.fzfrc
+fi
+
 
 # External plugins (initialized after)
 source ~/.zsh/plugins_after.zsh
