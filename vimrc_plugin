@@ -1,6 +1,4 @@
-"---------------------
-" VIM-Plugin configuration
-"---------------------
+" Vim-Plugin 
 
 " ----- ale -----
 let g:ale_set_signs = 1
@@ -160,7 +158,7 @@ let g:markdown_folding = 1
 " if you use one of the following:
 " " - https://github.com/Valloric/YouCompleteMe
 " " - https://github.com/nvim-lua/completion-nvim
-let g:UltiSnipsExpandTrigger="<S-tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
