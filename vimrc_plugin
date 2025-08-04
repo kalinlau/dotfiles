@@ -27,6 +27,7 @@ let g:ale_linters = {
 " Fixers / Formatters per filetype
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
+\   'java': ['google_java_format'],
 \   'json': ['prettier'],
 \   'python': ['yapf'],
 \   'yaml': ['yq'],

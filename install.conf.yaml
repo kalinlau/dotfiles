@@ -10,6 +10,7 @@
     ~/.bash:
     ~/.bash_profile:
     ~/.bashrc:
+    ~/.config/google-java-style.xml:
     ~/.config/yapf/style: yapf.conf
     ~/.config/emmet/snippets_custom.json:
     ~/.dotfiles: ''
