@@ -1,5 +1,9 @@
 " Vim-Plugin 
 
+" ----- auto-pairs -----
+let g:AutoPairsFlyMode = 1
+let g:AutoPairsShortcutBackInsert = '<M-b>'
+
 " ----- ale -----
 let g:ale_set_signs = 1
 let g:ale_sign_error = '✗'
@@ -8,10 +12,6 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_echo_msg_error_str = 'Error'
 let g:ale_echo_msg_warning_str = 'Warning'
 let g:ale_completion_enabled = 0
-
-" ----- auto-pairs -----
-let g:AutoPairsFlyMode = 1
-let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " Linters per filetype
 let g:ale_linters = {
