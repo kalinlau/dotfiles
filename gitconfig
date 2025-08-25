@@ -132,6 +132,7 @@
 	prompt = false
 [commit]
 	gpgsign = true
+	template = /home/liujialin/.gitmessage
 [tag]
 	gpgSign = true
 [interactive]

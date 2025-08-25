@@ -20,6 +20,7 @@
     ~/.fzfrc:
     ~/.gitconfig:
     ~/.gitignore_global:
+    ~/.gitmessage:
     ~/.gnupg/gpg.conf:
     ~/.haskeline:
     ~/.hgrc:
