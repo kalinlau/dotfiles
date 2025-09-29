@@ -61,9 +61,9 @@ set history=8192 " more history
 set nojoinspaces " suppress inserting two spaces between sentences
 " use 4 spaces instead of tabs during formatting
 set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 " smart case-sensitive search
 set ignorecase
 set smartcase
