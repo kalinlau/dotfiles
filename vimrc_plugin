@@ -13,18 +13,19 @@ let g:ale_echo_msg_error_str = 'Error'
 let g:ale_echo_msg_warning_str = 'Warning'
 let g:ale_completion_enabled = 0
 
-" Linters per filetype
+" Linters Allowed
 let g:ale_linters = {
 \   'css': ['stylelint'],
 \   'html': ['htmlhint'],
 \   'javascript': ['eslint'],
 \   'json': ['jq'],
+\   'java': ['checkstyle','javac'],
 \   'markdown': ['markdownlint'],
 \   'python': ['pylint'],
 \   'yaml': ['yq'],
 \}
 
-" Fixers / Formatters per filetype
+" Formatters Allowed
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
 \   'java': ['google_java_format'],
@@ -34,10 +35,13 @@ let g:ale_fixers = {
 \   'yaml': ['yq'],
 \}
 
-" Fix files on save (Requires fixers configured above)
+" Fix / Linter files on save
 let g:ale_fix_on_save = 1 
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_save = 1
+
+" Java linter config: checkstyle
+let g:ale_java_checkstyle_config = '~/.config/google-java-style.xml'
 
 " Jump to the next/previous error
 nnoremap <silent> ]e <Plug>(ale_next_error)
