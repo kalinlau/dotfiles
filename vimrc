@@ -61,9 +61,9 @@ set history=8192 " more history
 set nojoinspaces " suppress inserting two spaces between sentences
 " use 4 spaces instead of tabs during formatting
 set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 " smart case-sensitive search
 set ignorecase
 set smartcase
@@ -147,4 +147,11 @@ endif
 let $PLUGINFILE=expand("~/.vimrc_plugin")
 if filereadable($PLUGINFILE)
     source $PLUGINFILE
+endif
+
+" project customizations in ./config.vim
+" config project-level vim settings, e.g., javac classpath in ale plugin
+let $PROJFILE=expand("./config.vim")
+if filereadable($PROJFILE)
+    source $PROJFILE
 endif
