@@ -42,6 +42,11 @@ set autoindent
 "---------------------
 " Basic editing config
 "---------------------
+set encoding=utf-8
+set nobackup
+set nowritebackup
+set updatetime=300
+set signcolumn=yes
 set shortmess+=I " disable startup message
 set nu " number lines
 set rnu " relative line numbering

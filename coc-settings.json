@@ -1,3 +1,12 @@
 {
-  "diagnostic.displayByAle": true
+  "diagnostic.displayByAle": false,
+  "suggest.noselect": false,
+  "extensions.updateCheck": "weekly",
+  "fileSystemWatch.enable": true,
+
+  "coc.preferences.formatOnSave": true,
+  "coc.preferences.formatOnType": false,
+  "coc.preferences.formatOnSaveTimeout": 200,
+
+  "workspace.rootPatterns": [".git", ".hg"]
 }
