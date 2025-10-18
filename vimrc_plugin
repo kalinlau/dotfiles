@@ -110,7 +110,7 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css,markdown,xml,xsl,scss,sass EmmetInstall
 
 "----- easymotion -----
-map <Space> <Plug>(easymotion-prefix)
+map <Leader> <Plug>(easymotion-prefix)
 
 "----- fugitive -----
 set tags^=.git/tags;~
@@ -180,14 +180,15 @@ let g:coc_global_extensions = [
 \ 'coc-git',
 \ 'coc-html',
 \ 'coc-java',
+\ 'coc-tsserver',
 \ 'coc-diagnostic',
+\ 'coc-pairs',
+\ 'coc-clangd',
 \]
 
-
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" make <cr> select the first completion item and confirm
+" the completion when no item has been selected
+"inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1

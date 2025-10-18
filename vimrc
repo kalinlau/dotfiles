@@ -156,7 +156,7 @@ endif
 
 " project customizations in ./config.vim
 " config project-level vim settings, e.g., javac classpath in ale plugin
-let $PROJFILE=expand("./config.vim")
+let $PROJFILE=expand("./project.vim")
 if filereadable($PROJFILE)
     source $PROJFILE
 endif
