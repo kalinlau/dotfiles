@@ -10,7 +10,6 @@
     ~/.bash:
     ~/.bash_profile:
     ~/.bashrc:
-    ~/.vim/coc-settings.json: coc-settings.json
     ~/.config/google-java-style.xml:
     ~/.config/yapf/style: yapf.conf
     ~/.config/emmet/snippets_custom.json:

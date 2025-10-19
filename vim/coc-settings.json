@@ -1,1 +1,22 @@
-/home/liujialin/dotfiles/coc-settings.json
+{
+  "coc.preferences.formatOnSave": true,
+  "coc.preferences.formatOnType": false,
+  "coc.preferences.formatOnSaveTimeout": 200,
+  "coc.preferences.renameFillCurrent": false,
+
+  "diagnostic.displayByAle": false,
+  "diagnostic.virtualText": true,
+  "extensions.updateCheck": "weekly",
+  "fileSystemWatch.ignoredFolders": ["**/.git/**"],
+  "suggest.noselect": false,
+
+  "workspace.rootPatterns": ["project.vim", ".git/", ".hg/"],
+
+  "languageserver": {
+    "clangd": {
+      "command": "clangd",
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+    }
+  }
+}
