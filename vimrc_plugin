@@ -5,12 +5,13 @@ let g:AutoPairsFlyMode = 1
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " ----- ale -----
+"  WARNING: try use coc.nvim first, for unification
 let g:ale_set_signs = 1
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚡'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_echo_msg_error_str = 'Error'
-let g:ale_echo_msg_warning_str = 'Warning'
+let g:ale_echo_msg_error_str = 'ERROR'
+let g:ale_echo_msg_warning_str = 'WARNING'
 let g:ale_completion_enabled = 0
 
 " Linters
@@ -110,7 +111,7 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css,markdown,xml,xsl,scss,sass EmmetInstall
 
 "----- easymotion -----
-map <Leader> <Plug>(easymotion-prefix)
+"map <Leader><Leader> <Plug>(easymotion-prefix)
 
 "----- fugitive -----
 set tags^=.git/tags;~
@@ -176,14 +177,18 @@ noremap <Leader>x :OverCommandLine<CR>
 "  Conquer of Completion
 "
 let g:coc_global_extensions = [
-\ 'coc-json',
-\ 'coc-git',
-\ 'coc-html',
-\ 'coc-java',
-\ 'coc-tsserver',
-\ 'coc-diagnostic',
-\ 'coc-pairs',
-\ 'coc-clangd',
+  \ 'coc-clangd',
+  \ 'coc-diagnostic',
+  \ 'coc-fzf-preview',
+  \ 'coc-git',
+  \ 'coc-html',
+  \ 'coc-json',
+  \ 'coc-java',
+  \ 'coc-markdownlint',
+  \ 'coc-markdown-preview-enhanced',
+  \ 'coc-pyright',
+  \ 'coc-tsserver',
+  \ 'coc-vimlsp',
 \]
 
 " make <cr> select the first completion item and confirm
@@ -293,9 +298,31 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+function! CocRoot() abort
+  if exists('*coc#root')
+    return coc#root()
+  endif
+  return ''
+endfunction
+
+let g:lightline = {
+\ 'colorscheme': 'wombat',
+\ 'active': {
+\   'left': [ [ 'mode', 'paste' ],
+\             [ 'cocstatus', 'readonly', 'cocroot', 'filename', 'modified' ] ]
+\ },
+\ 'component_function': {
+\   'cocstatus': 'coc#status',
+\   'cocroot': 'CocRoot',
+\ },
+\ }
+
+" Use autocmd to force lightline update.
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 " Mappings for CoCList
 " Show all diagnostics
