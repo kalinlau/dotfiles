@@ -20,7 +20,7 @@ let g:ale_linters = {
 \   'html': ['htmlhint'],
 \   'javascript': ['eslint'],
 \   'json': ['jq'],
-"\   'java': ['checkstyle','javac'],  #use coc-java instead
+\   'java': ['checkstyle'],
 \   'markdown': ['markdownlint'],
 \   'python': ['pylint'],
 \   'yaml': ['yq'],
@@ -30,7 +30,6 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
 \   'java': ['google_java_format'],
-\   'json': ['prettier'],
 \   'markdown': ['prettier'],
 \   'python': ['yapf'],
 \   'yaml': ['yq'],
@@ -177,6 +176,9 @@ noremap <Leader>x :OverCommandLine<CR>
 "  Conquer of Completion
 "
 let g:coc_global_extensions = [
+  \ 'coc-alex',
+  \ 'coc-cmake',
+  \ 'coc-copilot',
   \ 'coc-clangd',
   \ 'coc-diagnostic',
   \ 'coc-fzf-preview',
@@ -187,13 +189,14 @@ let g:coc_global_extensions = [
   \ 'coc-markdownlint',
   \ 'coc-markdown-preview-enhanced',
   \ 'coc-pyright',
+  \ 'coc-sh',
   \ 'coc-tsserver',
   \ 'coc-vimlsp',
 \]
 
 " make <cr> select the first completion item and confirm
 " the completion when no item has been selected
-"inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1

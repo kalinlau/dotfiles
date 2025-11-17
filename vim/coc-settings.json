@@ -3,21 +3,18 @@
   "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveTimeout": 200,
   "coc.preferences.renameFillCurrent": false,
-  "diagnostic.displayByAle": false,
+  "diagnostic.displayByAle": true,
   "diagnostic.virtualText": true,
   "extensions.updateCheck": "weekly",
   "fileSystemWatch.ignoredFolders": [
     "**/.git/**"
   ],
+  "java.jdt.ls.vmargs": "-XX:+UseG1GC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms512m",
   "java.project.referencedLibraries": [
     "lib/**/*.jar"
   ],
+  "semanticTokens.enable": true,
   "suggest.noselect": false,
-  "workspace.rootPatterns": [
-    "project.vim",
-    ".git",
-    ".hg"
-  ],
   "languageserver": {
     "clangd": {
       "command": "clangd",
@@ -34,5 +31,11 @@
         "objcpp"
       ]
     }
-  }
+  },
+  "workspace.rootPatterns": [
+    "${cwd}/.idea",
+    ".git",
+    ".hg",
+    ".projections.json"
+  ]
 }

@@ -134,9 +134,9 @@ nnoremap <A-N> :set rnu!<CR>
 " save read-only files
 command -nargs=0 Sudow w !sudo tee % >/dev/null
 
-" 80 column layout highlight
+" 100 column layout highlight
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+match OverLength /\%101v.\+/
 
 "---------------------
 " Local customizations
