@@ -18,10 +18,6 @@
 	path = vim/pack/vendor/start/vim-git
 	url = https://github.com/tpope/vim-git.git
 	ignore = dirty
-[submodule "vim/bundle/vim-javascript"]
-	path = vim/pack/vendor/start/vim-javascript
-	url = https://github.com/pangloss/vim-javascript.git
-	ignore = dirty
 [submodule "vim/bundle/ctrlp.vim"]
 	path = vim/pack/vendor/start/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim
