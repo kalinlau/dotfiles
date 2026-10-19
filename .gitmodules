@@ -50,10 +50,6 @@
 	path = vim/pack/vendor/start/vim-liquid
 	url = https://github.com/tpope/vim-liquid
 	ignore = dirty
-[submodule "vim/bundle/supertab"]
-	path = vim/pack/vendor/start/supertab
-	url = https://github.com/ervandew/supertab
-	ignore = dirty
 [submodule "vim/bundle/editorconfig-vim"]
 	path = vim/pack/vendor/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim

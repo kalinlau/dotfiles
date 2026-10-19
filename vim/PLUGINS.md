@@ -1,6 +1,6 @@
 # Vim 插件全览与功能归类
 
-本文档整理了当前 dotfiles 中 `vim/pack/` 目录下的全部 **44 个 Vim 插件**（包含 `vim/pack/vendor/start/` 中的 42 个插件，以及独立包 `auto-pairs` 与 `coc.nvim`），结合项目中的 `vimrc` 和 `vimrc_plugin` 配置，从**核心功能**、**关键快捷键/配置**、**维护状态**以及**重叠与优化建议**四个维度进行深度剖析。
+本文档整理了当前 dotfiles 中 `vim/pack/` 目录下的全部 **43 个 Vim 插件**（包含 `vim/pack/vendor/start/` 中的 41 个插件，以及独立包 `auto-pairs` 与 `coc.nvim`），结合项目中的 `vimrc` 和 `vimrc_plugin` 配置，从**核心功能**、**关键快捷键/配置**、**维护状态**以及**重叠与优化建议**四个维度进行深度剖析。
 
 ---
 
@@ -8,8 +8,8 @@
 
 ```
 vim/pack/
-├── 1. 代码补全与 LSP 诊断 (5 个)
-│   ├── coc.nvim, ale, ultisnips, vim-snippets, supertab
+├── 1. 代码补全与 LSP 诊断 (4 个)
+│   ├── coc.nvim, ale, ultisnips, vim-snippets
 ├── 2. 文本编辑增强与对象 (6 个)
 │   ├── auto-pairs, vim-surround, nerdcommenter, vim-argwrap, vim-visual-multi, gundo.vim
 ├── 3. 导航搜索与文件管理 (6 个)
@@ -27,7 +27,7 @@ vim/pack/
 
 ---
 
-## 一、代码补全与 LSP 诊断 (5 个)
+## 一、代码补全与 LSP 诊断 (4 个)
 
 | 插件名称 | 仓库地址 | 核心功能简介 |
 | :--- | :--- | :--- |
@@ -35,10 +35,11 @@ vim/pack/
 | **ale** | [dense-analysis/ale](https://github.com/dense-analysis/ale) | 异步语法检查与代码修复引擎（Asynchronous Lint Engine），支持各类外部命令行 linter/fixer。 |
 | **ultisnips** | [sirver/ultisnips](https://github.com/sirver/ultisnips) | 强大的代码片段展开与编辑引擎，支持 Python 扩展语法。 |
 | **vim-snippets** | [honza/vim-snippets](https://github.com/honza/vim-snippets) | 社区维护的丰富代码片段库（包含 UltiSnips 与 SnipMate 格式）。 |
-| **supertab** | [ervandew/supertab](https://github.com/ervandew/supertab) | 使用 `<Tab>` 键触发 Vim 自带内置补全（Omni / Keyword / File 等）。 |
 
 ### 关键配置与快捷键
-- **`coc.nvim`**:
+- **`coc.nvim` & `ultisnips`**:
+  - `<Tab>`: 智能多合一（补全列表下选 / 片段展开 / 占位符前进 / 普通缩进）
+  - `<S-Tab>`: 智能后退（补全列表上选 / 占位符后退）
   - `<CR>`: 确认补全选项
   - `<C-Space>` / `<C-@>`: 手动触发补全
   - `gd` / `gy` / `gi` / `gr`: 跳转到定义 / 类型定义 / 实现 / 引用
@@ -52,15 +53,11 @@ vim/pack/
   - `<leader><leader>f`: 执行代码格式化修复（ALEFix）
   - `<leader><leader>l`: 手动触发语法检查（ALELint）
   - `<leader><leader>t` / `<leader><leader>T`: 全局/当前 Buffer 切换 ALE 开关
-- **`ultisnips`**:
-  - `<Tab>`: 触发展开代码片段
-  - `<C-b>`: 光标向前跳至下一个占位符
-  - `<C-z>`: 光标向后跳至上一个占位符
 
 ### 重叠分析与优化建议
 > [!NOTE]
-> 1. **`coc.nvim` 与 `ale` 重叠**：`vimrc_plugin` 中已注明 `WARNING: try use coc.nvim first, for unification`。ALE 已关闭了自带补全，并在保存时运行修复（`ale_fix_on_save=1`）。如果已配置好对应语言的 `coc` 扩展（例如 `coc-pyright`, `coc-tsserver`, `coc-eslint`），ALE 可精简为仅对没有 LSP 的文件格式做 linter 兜底。
-> 2. **`supertab` 冗余风险**：在以 `coc.nvim` + `ultisnips` 为核心补全的环境中，`supertab` 容易拦截 Tab 键产生按键冲突，建议评估停用。
+> 1. **`coc.nvim` 与 `ale` 互补分工**：已将 JS/TS 全面移交给 CoC（`coc-tsserver`, `coc-eslint`, `coc-prettier`），ALE 保留给 Java（checkstyle/google-java-format）、Python 等其他语言。
+> 2. **Tab 按键链已完成统一**：已彻底移除老旧的 `supertab`，通过引入 `coc-snippets` 将 UltiSnips 与 CoC 补全链路无缝整合至 `<Tab>` 与 `<S-Tab>`。
 
 ---
 
@@ -198,5 +195,5 @@ vim/pack/
 3. **检索性能升级与冗余插件精简（已完成）**：
    - [x] 已引入 `fzf.vim` 并适配 `ripgrep`，彻底移除 `ctrlp.vim`、`ack.vim` 以及已被 `:Buffers` 覆盖的 `vim-buffergator`。
 4. **长效现代化演进**：
-   - 评估 `supertab` 是否仍有必要（CoC + UltiSnips 已能完全满足补全需求）。
+   - [x] 已移除 `supertab`，由 `coc-snippets` 统筹联动 UltiSnips 代码片段与 CoC 补全，Tab 键智能复用。
    - 若遇到 Python3 依赖问题，可将 `gundo.vim` 替换为轻巧的纯 VimL 插件 `undotree`。

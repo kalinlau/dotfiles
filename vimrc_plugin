@@ -158,12 +158,8 @@ let g:markdown_folding = 1
 let g:vim_markdown_math = 1
 
 " ultisnips
-" Trigger configuration.
-" You need to change this to something other than <tab>
-" if you use one of the following:
-" " - https://github.com/Valloric/YouCompleteMe
-" " - https://github.com/nvim-lua/completion-nvim
-let g:UltiSnipsExpandTrigger="<tab>"
+" Trigger configuration (unified Tab chain driven by coc-snippets)
+let g:UltiSnipsExpandTrigger="<Nop>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
@@ -190,6 +186,7 @@ let g:coc_global_extensions = [
   \ 'coc-prettier',
   \ 'coc-pyright',
   \ 'coc-sh',
+  \ 'coc-snippets',
   \ 'coc-tsserver',
   \ 'coc-vimlsp',
 \]
@@ -202,6 +199,18 @@ function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+" Use <tab> and <s-tab> for completion navigation and snippet expand/jump
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ CheckBackspace() ? "\<TAB>" :
+      \ coc#refresh()
+
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_prev = '<s-tab>'
 
 " Use <c-space> to trigger completion
 if has('nvim')
