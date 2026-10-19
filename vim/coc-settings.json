@@ -3,7 +3,6 @@
   "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveTimeout": 200,
   "coc.preferences.renameFillCurrent": false,
-  "diagnostic.displayByAle": true,
   "diagnostic.virtualText": true,
   "extensions.updateCheck": "weekly",
   "fileSystemWatch.ignoredFolders": [

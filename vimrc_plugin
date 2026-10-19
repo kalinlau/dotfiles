@@ -4,76 +4,6 @@
 let g:AutoPairsFlyMode = 1
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 
-" ----- ale -----
-"  WARNING: try use coc.nvim first, for unification
-let g:ale_set_signs = 1
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '⚡'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_echo_msg_error_str = 'ERROR'
-let g:ale_echo_msg_warning_str = 'WARNING'
-let g:ale_completion_enabled = 0
-
-" Linters
-let g:ale_linters = {
-\   'css': ['stylelint'],
-\   'html': ['htmlhint'],
-\   'json': ['jq'],
-\   'java': ['checkstyle'],
-\   'markdown': ['markdownlint'],
-\   'python': ['pylint'],
-\   'yaml': ['yq'],
-\}
-
-" Formatters Allowed
-let g:ale_fixers = {
-\   'java': ['google_java_format'],
-\   'markdown': ['prettier'],
-\   'python': ['yapf'],
-\   'yaml': ['yq'],
-\}
-
-" Fix / Linter files on save
-let g:ale_fix_on_save = 1 
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_save = 1
-
-" Java linter config: checkstyle
-let g:ale_java_checkstyle_config = '~/.config/google-java-style.xml'
-
-" Jump to the next/previous error
-nnoremap <silent> ]e <Plug>(ale_next_error)
-nnoremap <silent> [e <Plug>(ale_previous_error)
-
-" Jump to the next/previous warning
-nnoremap <silent> ]w <Plug>(ale_next_warning)
-nnoremap <silent> [w <Plug>(ale_previous_warning)
-
-" Jump to the next/previous diagnostic (error or warning)
-nnoremap <silent> ]d <Plug>(ale_next_wrap)
-nnoremap <silent> [d <Plug>(ale_previous_wrap)
-
-" Automatically fix issues in the current buffer.
-nnoremap <Leader><Leader>f :ALEFix<CR>
-
-" Automatically lint issues in the current buffer.
-nnoremap <Leader><Leader>l :ALELint<CR>
-
-" Toggle ALE linting globally (on/off)
-nnoremap <Leader><Leader>t :ALEToggle<CR>
-
-" Toggle ALE linting for the current buffer (on/off)
-" <Leader><Leader>T (uppercase T) for "Toggle buffer"
-nnoremap <Leader><Leader>T :ALEToggleBuffer<CR>
-
-" Show ALE information (useful for debugging and seeing active linters)
-" <Leader><Leader>i for "info"
-nnoremap <Leader><Leader>i :ALEInfo<CR>
-
-" Clear diagnostics for current buffer
-nnoremap <Leader><Leader>C :ALEReset<CR>
-" Clear diagnostics for all buffers
-nnoremap <Leader><Leader>A :ALEResetBuffer<CR> 
 
 " ----- fzf & fzf.vim -----
 set rtp+=~/.fzf
@@ -187,8 +117,10 @@ let g:coc_global_extensions = [
   \ 'coc-pyright',
   \ 'coc-sh',
   \ 'coc-snippets',
+  \ 'coc-stylelint',
   \ 'coc-tsserver',
   \ 'coc-vimlsp',
+  \ 'coc-yaml',
 \]
 
 " make <cr> select the first completion item and confirm
