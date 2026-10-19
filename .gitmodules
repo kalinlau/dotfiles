@@ -18,10 +18,6 @@
 	path = vim/pack/vendor/start/vim-git
 	url = https://github.com/tpope/vim-git.git
 	ignore = dirty
-[submodule "vim/bundle/ctrlp.vim"]
-	path = vim/pack/vendor/start/ctrlp.vim
-	url = https://github.com/ctrlpvim/ctrlp.vim
-	ignore = dirty
 [submodule "vim/bundle/vim-bundler"]
 	path = vim/pack/vendor/start/vim-bundler
 	url = https://github.com/tpope/vim-bundler.git
@@ -74,10 +70,6 @@
 	path = vim/pack/vendor/start/haskell-vim
 	url = https://github.com/neovimhaskell/haskell-vim
 	ignore = dirty
-[submodule "vim/bundle/ack.vim"]
-	path = vim/pack/vendor/start/ack.vim
-	url = https://github.com/mileszs/ack.vim
-	ignore = dirty
 [submodule "vim/bundle/vim-signature"]
 	path = vim/pack/vendor/start/vim-signature
 	url = https://github.com/kshenoy/vim-signature
@@ -113,10 +105,6 @@
 [submodule "vim/bundle/typescript-vim"]
 	path = vim/pack/vendor/start/typescript-vim
 	url = https://github.com/leafgarland/typescript-vim
-	ignore = dirty
-[submodule "vim/bundle/vim-buffergator"]
-	path = vim/pack/vendor/start/vim-buffergator
-	url = https://github.com/jeetsukumaran/vim-buffergator
 	ignore = dirty
 [submodule "vim/bundle/vim-solidity"]
 	path = vim/pack/vendor/start/vim-solidity
@@ -298,3 +286,6 @@
 [submodule "vim/pack/auto-pairs/start/auto-pairs"]
 	path = vim/pack/auto-pairs/start/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs.git
+[submodule "vim/pack/vendor/start/fzf.vim"]
+	path = vim/pack/vendor/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git

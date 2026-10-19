@@ -1,6 +1,6 @@
 # Vim 插件全览与功能归类
 
-本文档整理了当前 dotfiles 中 `vim/pack/` 目录下的全部 **46 个 Vim 插件**（包含 `vim/pack/vendor/start/` 中的 44 个插件，以及独立包 `auto-pairs` 与 `coc.nvim`），结合项目中的 `vimrc` 和 `vimrc_plugin` 配置，从**核心功能**、**关键快捷键/配置**、**维护状态**以及**重叠与优化建议**四个维度进行深度剖析。
+本文档整理了当前 dotfiles 中 `vim/pack/` 目录下的全部 **44 个 Vim 插件**（包含 `vim/pack/vendor/start/` 中的 42 个插件，以及独立包 `auto-pairs` 与 `coc.nvim`），结合项目中的 `vimrc` 和 `vimrc_plugin` 配置，从**核心功能**、**关键快捷键/配置**、**维护状态**以及**重叠与优化建议**四个维度进行深度剖析。
 
 ---
 
@@ -12,9 +12,9 @@ vim/pack/
 │   ├── coc.nvim, ale, ultisnips, vim-snippets, supertab
 ├── 2. 文本编辑增强与对象 (6 个)
 │   ├── auto-pairs, vim-surround, nerdcommenter, vim-argwrap, vim-visual-multi, gundo.vim
-├── 3. 导航搜索与文件管理 (8 个)
-│   ├── nerdtree, ctrlp.vim, ack.vim, vim-buffergator, vim-easymotion,
-│   └── incsearch.vim, incsearch-easymotion.vim, vim-signature
+├── 3. 导航搜索与文件管理 (6 个)
+│   ├── nerdtree, fzf.vim, vim-easymotion, incsearch.vim,
+│   └── incsearch-easymotion.vim, vim-signature
 ├── 4. 界面美化与状态栏 (3 个)
 │   ├── lightline.vim, vim-colors-solarized, vim-over
 ├── 5. 语言语法与文件类型支持 (16 个)
@@ -93,36 +93,33 @@ vim/pack/
 
 ---
 
-## 三、导航搜索与文件管理 (8 个)
+## 三、导航搜索与文件管理 (6 个)
 
 | 插件名称 | 仓库地址 | 核心功能简介 |
 | :--- | :--- | :--- |
+| **fzf.vim** | [junegunn/fzf.vim](https://github.com/junegunn/fzf.vim) | 基于 fzf 的现代极速模糊搜索整合插件，提供文件 (`:Files`)、缓冲区 (`:Buffers`)、全局检索 (`:Rg` / `:Ag`) 与浮动预览窗口。 |
 | **nerdtree** | [preservim/nerdtree](https://github.com/preservim/nerdtree) | 经典的树状侧边栏文件管理器。 |
-| **ctrlp.vim** | [ctrlpvim/ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) | 纯 VimL 编写的轻量级文件、缓冲区、最近使用文件（MRU）模糊匹配搜索工具。 |
-| **ack.vim** | [mileszs/ack.vim](https://github.com/mileszs/ack.vim) | 项目全局代码内容搜索前端（已配置对接 `ag` The Silver Searcher）。 |
-| **vim-buffergator** | [jeetsukumaran/vim-buffergator](https://github.com/jeetsukumaran/vim-buffergator) | 侧边栏交互式 Buffer 与 Tab 管理窗口。 |
 | **vim-easymotion** | [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion) | 屏幕可视区域任意位置的快速高亮精准跳跃。 |
 | **incsearch.vim** | [haya14busa/incsearch.vim](https://github.com/haya14busa/incsearch.vim) | 渐进式搜索体验增强，打字时即时高亮当前屏幕内的所有匹配项。 |
 | **incsearch-easymotion.vim** | [haya14busa/incsearch-easymotion.vim](https://github.com/haya14busa/incsearch-easymotion.vim) | 将渐进式搜索与 EasyMotion 深度结合，搜索后直接以键位标记跳转。 |
 | **vim-signature** | [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature) | 在侧边栏 SignColumn 动态显示、高亮与快速管理 Vim Marks（行书签）。 |
 
 ### 关键配置与快捷键
+- **`fzf.vim`**:
+  - `<C-p>`: 模糊查找项目文件（`:Files<CR>`）
+  - `;`: 模糊搜索已打开的 Buffer（`:Buffers<CR>`）
+  - `<leader>A`: 交互式全局内容检索（`:Rg` 优先，自动回退 `:Ag`）
+  - `<leader>K`: 快速检索光标所在词
 - **`nerdtree`**: `<leader>n` 打开/关闭目录树；`<leader>f` 在树中定位当前文件
-- **`ctrlp.vim`**: `;` 唤出 Buffer 模糊搜索列表（`:CtrlPBuffer<CR>`）
-- **`ack.vim`**: `<leader>A` 触发 `:Ack!` 全局搜索
-- **`vim-buffergator`**: `<leader>b` 切换打开 Buffergator 列表
 - **`incsearch` & `incsearch-easymotion`**:
   - `/` / `?` / `g/`: 替换原生搜索并保持高亮
   - `z/` / `z?` / `zg/`: 搜索同时触发 EasyMotion 目标字母直达跳转
 - **`vim-signature`**: 使用原生 `m[a-z]` 打标并在符号列即时显示，`]'` / `['` 前后快速跳转书签
 
-### 潜在按键冲突与优化提示
-> [!WARNING]
-> - **快捷键 `K` 存在冲突覆盖**：
->   - `vimrc_plugin` L83 定义了：`nnoremap K :Gag "\b<C-R><C-W>\b"<CR>:cw<CR>`（使用 `ack.vim` / `ag` 全局搜索光标下单词）。
->   - 但在 L225 中重新定义了：`nnoremap <silent> K :call ShowDocumentation()<CR>`（唤出 `coc.nvim` 浮动文档窗口）。
->   - **后果**：后加载的 coc 覆盖了前面的 ack 映射，当前按 `K` 仅会查看文档。建议将 ack 搜词映射为 `<leader>k` 或 `<leader>K`。
-> - **Buffer 管理功能重叠**：`vim-buffergator` 与 `ctrlp` 的 `;`（`:CtrlPBuffer`）以及 `coc-nvim` 的 `<space>b`（如果有）存在功能重合，长期未更新的 buffergator 可按需取舍。
+### 优化小结与冲突解决
+> [!NOTE]
+> - **全面升级至 `fzf.vim` + `ripgrep`**：已彻底移除老旧的 `ctrlp.vim`、`ack.vim` 以及 `vim-buffergator`。
+> - **按键冲突已化解**：光标搜词已调整至 `<leader>K`，原生 `K` 键完整让渡给 `coc.nvim` 浮动文档窗口（ShowDocumentation），再无覆盖冲突。
 
 ---
 
@@ -194,12 +191,12 @@ vim/pack/
 
 ## 总结与建议行动清单
 
-1. **解决按键冲突（Ack vs CoC）**：
-   - 当前 `K` 键被 `coc.nvim` 的文档查询覆盖。建议在 `vimrc_plugin` 中将 Ack 的光标搜词改为 `<leader>k` 或 `<leader>K`。
+1. **解决按键冲突（Ack vs CoC）（已完成）**：
+   - [x] 已用 `fzf.vim` 替代 `ack.vim`，光标搜词调整为 `<leader>K`，`K` 键完整保留给 `coc.nvim` 浮动文档窗口。
 2. **清理冗余语法插件（已完成）**：
    - [x] 已移除 `vim-javascript`，保留更适合 `vim-jsx-pretty` 的 `vim-js`。
-3. **精简潜在冲突插件**：
-   - 评估 `supertab` 是否仍有必要（CoC + UltiSnips 已能完全满足补全需求）。
-   - 评估 `vim-buffergator` 是否可由 `CtrlPBuffer` 或 `CocList` 完全替代。
+3. **检索性能升级与冗余插件精简（已完成）**：
+   - [x] 已引入 `fzf.vim` 并适配 `ripgrep`，彻底移除 `ctrlp.vim`、`ack.vim` 以及已被 `:Buffers` 覆盖的 `vim-buffergator`。
 4. **长效现代化演进**：
+   - 评估 `supertab` 是否仍有必要（CoC + UltiSnips 已能完全满足补全需求）。
    - 若遇到 Python3 依赖问题，可将 `gundo.vim` 替换为轻巧的纯 VimL 插件 `undotree`。

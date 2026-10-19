@@ -75,27 +75,27 @@ nnoremap <Leader><Leader>C :ALEReset<CR>
 " Clear diagnostics for all buffers
 nnoremap <Leader><Leader>A :ALEResetBuffer<CR> 
 
-" ----- ag / ack.vim -----
-nnoremap <Leader>A :Ack!<Space>
-command -nargs=+ Gag Gcd | Ack! <args>
-nnoremap K :Gag "\b<C-R><C-W>\b"<CR>:cw<CR>
-if executable('ag')
-    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-    let g:ackprg = 'ag --vimgrep'
+" ----- fzf & fzf.vim -----
+set rtp+=~/.fzf
+
+" Modern floating window layout
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
+
+" Files and Buffers search
+nnoremap <C-p> :Files<CR>
+nnoremap ; :Buffers<CR>
+
+" Global search (prefer ripgrep, fallback to ag)
+if executable('rg')
+    nnoremap <Leader>A :Rg<Space>
+    nnoremap <Leader>K :Rg <C-R><C-W><CR>
+elseif executable('ag')
+    nnoremap <Leader>A :Ag<Space>
+    nnoremap <Leader>K :Ag <C-R><C-W><CR>
 endif
 
 "----- argwrap -----
 nnoremap <Leader>w :ArgWrap<CR>
-
-"----- buffergator -----
-let g:buffergator_suppress_keymaps = 1
-nnoremap <Leader>b :BuffergatorToggle<CR>
-
-"----- ctrlp -----
-nnoremap ; :CtrlPBuffer<CR>
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_regexp = 1
 
 " ----- emmet -----
 " enable globally for any filetype.
