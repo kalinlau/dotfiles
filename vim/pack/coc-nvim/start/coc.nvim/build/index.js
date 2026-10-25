@@ -57220,7 +57220,7 @@ var init_installer = __esm({
       }
       getInstallArguments(exePath, url) {
         let env = "production";
-        let args = ["install", "--ignore-scripts", "--no-lockfile"];
+        let args = ["install", "--ignore-scripts", "--no-package-lock"];
         if (url && url.startsWith("https://github.com")) {
           args = ["install"];
           env = "development";
