@@ -38,7 +38,8 @@ let g:user_emmet_install_global = 0
 autocmd FileType java,html,css,markdown,xml,xsl,scss,sass EmmetInstall
 
 "----- easymotion -----
-"map <Leader><Leader> <Plug>(easymotion-prefix)
+let g:EasyMotion_smartcase = 1
+map <Leader><Leader>s <Plug>(easymotion-s2)
 
 "----- fugitive -----
 set tags^=.git/tags;~

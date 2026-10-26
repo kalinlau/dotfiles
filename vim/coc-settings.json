@@ -5,30 +5,16 @@
   "coc.preferences.renameFillCurrent": false,
   "diagnostic.virtualText": true,
   "extensions.updateCheck": "weekly",
-  "fileSystemWatch.ignoredFolders": [
-    "**/.git/**"
-  ],
+  "fileSystemWatch.ignoredFolders": ["**/.git/**"],
   "java.jdt.ls.vmargs": "-XX:+UseG1GC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms512m",
-  "java.project.referencedLibraries": [
-    "lib/**/*.jar"
-  ],
+  "java.project.referencedLibraries": ["lib/**/*.jar"],
   "semanticTokens.enable": true,
   "suggest.noselect": false,
   "languageserver": {
     "clangd": {
       "command": "clangd",
-      "rootPatterns": [
-        "compile_flags.txt",
-        "compile_commands.json"
-      ],
-      "filetypes": [
-        "c",
-        "cc",
-        "cpp",
-        "c++",
-        "objc",
-        "objcpp"
-      ]
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
     }
   },
   "workspace.rootPatterns": [
@@ -39,5 +25,26 @@
   ],
   "json.schemaDownload.trustedDomains": {
     "https://raw.githubusercontent.com": true
-  }
+  },
+  "eslint.probe": [
+    "astro",
+    "civet",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "css",
+    "glimmer-js",
+    "glimmer-ts",
+    "html",
+    "mdx",
+    "svelte",
+    "vue",
+    "markdown",
+    "json",
+    "jsonc",
+    "graphql"
+  ],
+  "eslint.rules.customizations": [],
+  "eslint.quiet": false
 }
