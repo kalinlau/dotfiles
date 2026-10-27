@@ -1,0 +1,305 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# agy-sync: Google Drive Synchronization Utility for Antigravity CLI
+# ==============================================================================
+set -euo pipefail
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/antigravity-sync"
+CONFIG_FILE="${CONFIG_DIR}/config.env"
+
+# Default configuration values
+REMOTE_NAME="gdrive"
+REMOTE_BASE_PATH="Antigravity"
+LOCAL_DATA_DIR="${HOME}/.gemini/antigravity-cli"
+# 同步目标子目录：包含存放 transcripts/artifacts 的 brain 目录，以及存放 sqlite db 的 conversations 目录
+SYNC_TARGETS=("brain" "conversations")
+RCLONE_EXTRA_ARGS="--fast-list --transfers=4 --drive-chunk-size=16M"
+
+# Load user configuration if present
+if [[ -f "${CONFIG_FILE}" ]]; then
+    # shellcheck source=/dev/null
+    source "${CONFIG_FILE}"
+fi
+
+# Expand tilde in LOCAL_DATA_DIR if needed
+LOCAL_DATA_DIR="${LOCAL_DATA_DIR/#\~/$HOME}"
+
+# Colors
+COLOR_RESET="\033[0m"
+COLOR_GREEN="\033[32m"
+COLOR_YELLOW="\033[33m"
+COLOR_BLUE="\033[34m"
+COLOR_RED="\033[31m"
+
+log_info() {
+    echo -e "${COLOR_BLUE}[INFO]${COLOR_RESET} $*"
+}
+
+log_success() {
+    echo -e "${COLOR_GREEN}[SUCCESS]${COLOR_RESET} $*"
+}
+
+log_warn() {
+    echo -e "${COLOR_YELLOW}[WARN]${COLOR_RESET} $*" >&2
+}
+
+log_error() {
+    echo -e "${COLOR_RED}[ERROR]${COLOR_RESET} $*" >&2
+}
+
+check_rclone() {
+    if ! command -v rclone >/dev/null 2>&1; then
+        log_error "rclone 未安装或不在 PATH 中。"
+        log_error "请运行 'curl https://rclone.org/install.sh | sudo bash' 安装，或访问 https://rclone.org/install/"
+        return 1
+    fi
+    return 0
+}
+
+check_remote() {
+    check_rclone || return 1
+    if ! rclone listremotes | grep -q "^${REMOTE_NAME}:$"; then
+        log_error "未找到名为 '${REMOTE_NAME}:' 的 rclone 远程配置。"
+        log_error "请先运行 'rclone config' 配置 Google Drive，远程名称建议命名为 '${REMOTE_NAME}'。"
+        return 1
+    fi
+    return 0
+}
+
+cmd_pull() {
+    local quiet=0
+    for arg in "$@"; do
+        if [[ "$arg" == "--quiet" || "$arg" == "-q" ]]; then
+            quiet=1
+        fi
+    done
+
+    check_remote || return 1
+
+    local flags=(--update $RCLONE_EXTRA_ARGS)
+    if [[ $quiet -eq 1 ]]; then
+        flags+=(--quiet)
+    else
+        flags+=(--stats-one-line -v)
+    fi
+
+    for target in "${SYNC_TARGETS[@]}"; do
+        local local_target_dir="${LOCAL_DATA_DIR}/${target}"
+        local remote_target_path="${REMOTE_NAME}:${REMOTE_BASE_PATH}/${target}"
+
+        mkdir -p "${local_target_dir}"
+
+        if [[ $quiet -eq 0 ]]; then
+            log_info "正在从 Google Drive [${remote_target_path}] 拉取 [${target}]..."
+        fi
+
+        # shellcheck disable=SC2086
+        if rclone copy "${remote_target_path}" "${local_target_dir}" "${flags[@]}"; then
+            if [[ $quiet -eq 0 ]]; then
+                log_success "[${target}] 拉取完成。"
+            fi
+        else
+            log_warn "[${target}] 拉取过程中遇到异常，跳过并继续。"
+        fi
+    done
+
+    if [[ $quiet -eq 0 ]]; then
+        log_success "所有会话数据拉取完成（本地会话已更新）。"
+    fi
+    return 0
+}
+
+cmd_push() {
+    local quiet=0
+    for arg in "$@"; do
+        if [[ "$arg" == "--quiet" || "$arg" == "-q" ]]; then
+            quiet=1
+        fi
+    done
+
+    check_remote || return 1
+
+    local flags=(--update $RCLONE_EXTRA_ARGS)
+    if [[ $quiet -eq 1 ]]; then
+        flags+=(--quiet)
+    else
+        flags+=(--stats-one-line -v)
+    fi
+
+    for target in "${SYNC_TARGETS[@]}"; do
+        local local_target_dir="${LOCAL_DATA_DIR}/${target}"
+        local remote_target_path="${REMOTE_NAME}:${REMOTE_BASE_PATH}/${target}"
+
+        if [[ ! -d "${local_target_dir}" ]]; then
+            continue
+        fi
+
+        # Check if directory has any content
+        if [[ -z "$(ls -A "${local_target_dir}" 2>/dev/null)" ]]; then
+            continue
+        fi
+
+        if [[ $quiet -eq 0 ]]; then
+            log_info "正在将本地 [${target}] 推送到 Google Drive [${remote_target_path}]..."
+        fi
+
+        # shellcheck disable=SC2086
+        if rclone copy "${local_target_dir}" "${remote_target_path}" "${flags[@]}"; then
+            if [[ $quiet -eq 0 ]]; then
+                log_success "[${target}] 推送完成。"
+            fi
+        else
+            log_warn "[${target}] 推送过程中遇到异常，跳过并继续。"
+        fi
+    done
+
+    if [[ $quiet -eq 0 ]]; then
+        log_success "所有本地会话记录已推送到 Google Drive。"
+    fi
+    return 0
+}
+
+cmd_sync() {
+    log_info "开始双向增量归并同步..."
+    log_info "步骤 1/2: 拉取云端新增与更新的会话 (brain & conversations)..."
+    cmd_pull "$@" || log_warn "拉取步骤遇到异常，继续尝试推送本地更改..."
+    log_info "步骤 2/2: 推送本地新增与更新的会话 (brain & conversations)..."
+    cmd_push "$@"
+    log_success "增量归并同步流程结束。"
+}
+
+cmd_status() {
+    echo "=================================================="
+    echo " Antigravity CLI Google Drive 同步状态"
+    echo "=================================================="
+    echo -e "配置文件路径 : ${CONFIG_FILE}"
+    echo -e "本地数据根目录: ${LOCAL_DATA_DIR}"
+    echo -e "云端存储根路径: ${REMOTE_NAME}:${REMOTE_BASE_PATH}"
+    echo -e "同步监控目标 : ${SYNC_TARGETS[*]}"
+
+    if ! check_rclone; then
+        echo -e "${COLOR_RED}[×] rclone: 未安装${COLOR_RESET}"
+        return 1
+    fi
+    echo -e "${COLOR_GREEN}[√] rclone: 已安装 ($(rclone --version | head -n 1))${COLOR_RESET}"
+
+    if ! check_remote; then
+        echo -e "${COLOR_RED}[×] Remote 目标: 未配置 '${REMOTE_NAME}:'${COLOR_RESET}"
+        return 1
+    fi
+    echo -e "${COLOR_GREEN}[√] Remote 目标: 已就绪 (${REMOTE_NAME}:)${COLOR_RESET}"
+
+    # Check local brain & conversations
+    local local_brain_count=0
+    if [[ -d "${LOCAL_DATA_DIR}/brain" ]]; then
+        local_brain_count=$(find "${LOCAL_DATA_DIR}/brain" -mindepth 1 -maxdepth 1 -type d | wc -l)
+    fi
+    local local_db_count=0
+    if [[ -d "${LOCAL_DATA_DIR}/conversations" ]]; then
+        local_db_count=$(find "${LOCAL_DATA_DIR}/conversations" -name "*.db" 2>/dev/null | wc -l)
+    fi
+    echo "本地会话总数 : ${local_brain_count} 个 brain 目录, ${local_db_count} 个 SQLite 数据库"
+
+    # Check remote connectivity and counts
+    echo "正在测试云端连接..."
+    if rclone lsd "${REMOTE_NAME}:" >/dev/null 2>&1; then
+        echo -e "${COLOR_GREEN}[√] Google Drive 连接正常${COLOR_RESET}"
+        local remote_brain_count
+        remote_brain_count=$(rclone lsf --dirs-only "${REMOTE_NAME}:${REMOTE_BASE_PATH}/brain" 2>/dev/null | wc -l || echo 0)
+        local remote_db_count
+        remote_db_count=$(rclone lsf --files-only "${REMOTE_NAME}:${REMOTE_BASE_PATH}/conversations" --include "*.db" 2>/dev/null | wc -l || echo 0)
+        echo "云端会话总数 : ${remote_brain_count} 个 brain 目录, ${remote_db_count} 个 SQLite 数据库"
+    else
+        echo -e "${COLOR_YELLOW}[!] 无法连接到 Google Drive，请检查网络/代理或凭证有效期${COLOR_RESET}"
+    fi
+    echo "=================================================="
+}
+
+cmd_list() {
+    check_remote || return 1
+    echo "=== 本地 brain 会话列表 (${LOCAL_DATA_DIR}/brain) ==="
+    if [[ -d "${LOCAL_DATA_DIR}/brain" ]]; then
+        find "${LOCAL_DATA_DIR}/brain" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | while read -r dir; do
+            local basename_dir
+            basename_dir=$(basename "$dir")
+            local mod_time
+            mod_time=$(date -r "$dir" "+%Y-%m-%d %H:%M:%S" 2>/dev/null || stat -c "%y" "$dir" 2>/dev/null || echo "Unknown")
+            echo "  [$mod_time] $basename_dir"
+        done | sort -r | head -n 10
+    else
+        echo "  (暂无本地 brain 会话)"
+    fi
+
+    echo ""
+    echo "=== 本地 SQLite 会话数据库 (${LOCAL_DATA_DIR}/conversations) ==="
+    if [[ -d "${LOCAL_DATA_DIR}/conversations" ]]; then
+        find "${LOCAL_DATA_DIR}/conversations" -name "*.db" 2>/dev/null | while read -r dbfile; do
+            local basename_file
+            basename_file=$(basename "$dbfile")
+            local mod_time
+            mod_time=$(date -r "$dbfile" "+%Y-%m-%d %H:%M:%S" 2>/dev/null || stat -c "%y" "$dbfile" 2>/dev/null || echo "Unknown")
+            echo "  [$mod_time] $basename_file"
+        done | sort -r | head -n 10
+    else
+        echo "  (暂无本地 SQLite 数据库)"
+    fi
+
+    echo ""
+    echo "=== 云端 brain 会话列表 (${REMOTE_NAME}:${REMOTE_BASE_PATH}/brain) ==="
+    rclone lsf --dirs-only "${REMOTE_NAME}:${REMOTE_BASE_PATH}/brain" 2>/dev/null | head -n 10 | while read -r dir; do
+        echo "  ${dir%/}"
+    done
+
+    echo ""
+    echo "=== 云端 SQLite 会话数据库 (${REMOTE_NAME}:${REMOTE_BASE_PATH}/conversations) ==="
+    rclone lsf --files-only "${REMOTE_NAME}:${REMOTE_BASE_PATH}/conversations" --include "*.db" 2>/dev/null | head -n 10 | while read -r file; do
+        echo "  $file"
+    done
+}
+
+show_help() {
+    cat <<EOF
+Usage: agy-sync <command> [options]
+
+Commands:
+  pull [--quiet]     从 Google Drive 拉取 brain 和 conversations 目录
+  push [--quiet]     将本地 brain 和 conversations 目录增量推送到 Google Drive
+  sync               完整双向同步（先 pull 再 push，实现多设备增量归并）
+  status             检查环境、rclone 配置及本地/云端会话与 DB 计数
+  list               查看本地与云端的会话 ID 与 SQLite 数据库
+  help               显示此帮助信息
+
+Configuration file:
+  ${CONFIG_FILE}
+  (可通过编辑此文件修改 REMOTE_NAME, REMOTE_BASE_PATH, LOCAL_DATA_DIR 等参数)
+EOF
+}
+
+case "${1:-help}" in
+    pull)
+        shift
+        cmd_pull "$@"
+        ;;
+    push)
+        shift
+        cmd_push "$@"
+        ;;
+    sync)
+        shift
+        cmd_sync "$@"
+        ;;
+    status)
+        cmd_status
+        ;;
+    list)
+        cmd_list
+        ;;
+    help|--help|-h)
+        show_help
+        ;;
+    *)
+        log_error "未知命令: $1"
+        show_help
+        exit 1
+        ;;
+esac
