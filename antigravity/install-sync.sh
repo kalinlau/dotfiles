@@ -67,7 +67,7 @@ if [[ ! -f "${CONFIG_FILE}" ]]; then
     cat > "${CONFIG_FILE}" <<EOF
 # Antigravity CLI Google Drive Sync Configuration
 REMOTE_NAME="gdrive"
-REMOTE_BASE_PATH="Antigravity"
+REMOTE_BASE_PATH="Antigravity-sync"
 LOCAL_DATA_DIR="${HOME}/.gemini/antigravity-cli"
 SYNC_TARGETS=("brain" "conversations")
 RCLONE_EXTRA_ARGS="--fast-list --transfers=4 --drive-chunk-size=16M"
