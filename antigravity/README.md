@@ -6,7 +6,6 @@
 
 - [`agy-sync`](agy-sync)：核心同步命令行工具（支持 `pull`、`push`、`sync`、`status`、`list`）
 - [`install-sync.sh`](install-sync.sh)：一键安装部署脚本（自动校验 rclone、生成软链接、配置 Shell 钩子）
-- [`agy-wrapper.sh`](agy-wrapper.sh)：Shell 包装器脚本（定义 `agy()` 函数，启动前 pull，退出后 push）
 
 ## 一键安装与配置
 
@@ -18,9 +17,9 @@ bash install-sync.sh
 ```
 
 ### 安装内容说明
+
 1. **命令软链接**：将 `agy-sync` 软链接至 `~/.local/bin/agy-sync`，后续直接修改本目录代码立即全系统生效。
 2. **配置文件**：在 `~/.config/antigravity-sync/config.env` 生成默认配置（可自定义远程名、云端根目录等）。
-3. **Shell 无侵入集成**：在 `~/.shell_local_after` 中添加 `agy-wrapper.sh` 的引用，确保 dotfiles 下受版本控制的 `bashrc` / `zshrc` 保持干净。
 
 ## 常用命令
 
