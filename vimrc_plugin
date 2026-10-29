@@ -41,7 +41,7 @@ autocmd FileType java,html,css,markdown,xml,xsl,scss,sass EmmetInstall
 let g:EasyMotion_smartcase = 1
 map <Leader><Leader>s <Plug>(easymotion-s2)
 
-"----- fugitive -----
+"----- git tags -----
 set tags^=.git/tags;~
 
 "----- gundo -----
@@ -157,6 +157,24 @@ endif
 nmap <silent><nowait> [g <Plug>(coc-diagnostic-prev)
 nmap <silent><nowait> ]g <Plug>(coc-diagnostic-next)
 
+" ----- coc-git navigation & actions -----
+" Navigate chunks (git diff changes) of current buffer
+nmap <silent><nowait> [c <Plug>(coc-git-prevchunk)
+nmap <silent><nowait> ]c <Plug>(coc-git-nextchunk)
+" Navigate git conflicts of current buffer
+nmap <silent><nowait> [C <Plug>(coc-git-prevconflict)
+nmap <silent><nowait> ]C <Plug>(coc-git-nextconflict)
+" Show chunk diff preview at current cursor position
+nmap <silent> <leader>gp <Plug>(coc-git-chunkinfo)
+" Show commit info (git blame) for current line
+nmap <silent> <leader>gb <Plug>(coc-git-commitinfo)
+" Undo current chunk changes
+nnoremap <silent> <leader>gu :CocCommand git.chunkUndo<CR>
+" Stage current chunk to index
+nnoremap <silent> <leader>gs :CocCommand git.chunkStage<CR>
+" Open side-by-side git diff against index
+nnoremap <silent> <leader>gd :CocCommand git.diffBuffers<CR>
+
 " GoTo code navigation
 nmap <silent><nowait> gd <Plug>(coc-definition)
 nmap <silent><nowait> gy <Plug>(coc-type-definition)
@@ -254,24 +272,33 @@ function! CocRoot() abort
   return ''
 endfunction
 
+function! LightlineGit() abort
+  let l:branch = get(g:, 'coc_git_status', '')
+  let l:status = get(b:, 'coc_git_status', '')
+  return empty(l:branch) ? '' : (empty(l:status) ? l:branch : l:branch . ' ' . l:status)
+endfunction
+
 let g:lightline = {
 \ 'colorscheme': 'wombat',
 \ 'active': {
 \   'left': [ [ 'mode', 'paste' ],
-\             [ 'cocstatus', 'readonly', 'cocroot', 'filename', 'modified' ] ]
+\             [ 'gitbranch', 'cocstatus', 'readonly', 'cocroot', 'filename', 'modified' ] ]
 \ },
 \ 'component_function': {
 \   'cocstatus': 'coc#status',
 \   'cocroot': 'CocRoot',
+\   'gitbranch': 'LightlineGit',
 \ },
 \ }
 
 " Use autocmd to force lightline update.
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+autocmd User CocStatusChange,CocDiagnosticChange,CocGitStatusChange call lightline#update()
 
 " Mappings for CoCList
 " Show all diagnostics
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Show git status files
+nnoremap <silent><nowait> <space>g  :<C-u>CocList --normal gstatus<cr>
 " Manage extensions
 nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 " Show commands

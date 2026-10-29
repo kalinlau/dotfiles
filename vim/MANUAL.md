@@ -129,3 +129,43 @@ EasyMotion 绝不仅仅是移动光标，它还是一个标准的 Vim Motion，�
 * **`d\\w` + `目标字母`**：从当前光标直接删除到目标单词处！
 * **`c\\s` + `2个字符` + `目标字母`**：直接把当前光标到目标位置之间的全部内容删除并进入编辑！
 * **`y\\j` + `目标字母`**：直接把当前行向下复制到目标行！
+
+---
+
+## coc-git
+
+- **定位**：由 `coc.nvim` 生态驱动的高性能异步 Git 状态提示、行变动极速移动与改动管理套件。
+- **配置位置**：[`vimrc_plugin`](file:///home/laukalin/dotfiles/vimrc_plugin) 中的 `" ----- coc-git navigation & actions -----` 与 `g:lightline` 配置段。
+
+### 1. 界面状态显示说明
+
+- **侧边栏符号列 (SignColumn)**：
+  - `+`：新增的代码行（Added）
+  - `~`：修改的代码行（Changed）
+  - `_`：被删除的代码行标记（Removed）
+  - `‾` / `≃`：顶部删除与行内变更加删除
+- **底部状态栏 (Lightline)**：
+  - 自动显示当前 Git 分支（如 ` master*`）以及当前文件相对于 Git 索引的增删改统计（如 `+2 ~1 -0`）。
+  - 支持多缓冲区自适应，切换到未纳管文件或普通窗口时自动隐匿。
+
+### 2. 核心快捷键速查（变动跳转与极速交互）
+
+| 需求场景 | 快捷键 | 对应动作 / 命令 | 操作说明 |
+| :--- | :---: | :--- | :--- |
+| **跳转下一个变动块** | **`]c`** | `<Plug>(coc-git-nextchunk)` | 快速跳转至下一个 Git diff 变更处（Chunk/Hunk）。 |
+| **跳转上一个变动块** | **`[c`** | `<Plug>(coc-git-prevchunk)` | 快速跳转至上一个 Git diff 变更处。 |
+| **跳转下一个冲突块** | **`]C`** | `<Plug>(coc-git-nextconflict)` | 遇到 Git Merge 冲突时，一键直达下一个冲突标记。 |
+| **跳转上一个冲突块** | **`[C`** | `<Plug>(coc-git-prevconflict)` | 一键直达上一个冲突标记。 |
+| **预览当前块 Diff** | **`<Leader>gp`**<br>*(即 `\gp`)* | `<Plug>(coc-git-chunkinfo)` | 在浮动弹窗中直接查看光标所在块修改前的原始内容对比。 |
+| **查看当前行 Blame** | **`<Leader>gb`**<br>*(即 `\gb`)* | `<Plug>(coc-git-commitinfo)` | 弹窗展示当前行代码的最后提交作者、时间与 Commit 信息。 |
+| **撤销/回滚当前块** | **`<Leader>gu`**<br>*(即 `\gu`)* | `:CocCommand git.chunkUndo` | **极高频安全操作**：仅放弃当前光标所在的改动块，无需整文件回滚。 |
+| **暂存当前块至暂存区** | **`<Leader>gs`**<br>*(即 `\gs`)* | `:CocCommand git.chunkStage` | 仅暂存光标所在块（相当于精准的 `git add -p` 单块暂存）。 |
+| **左右分屏 Diff 对比** | **`<Leader>gd`**<br>*(即 `\gd`)* | `:CocCommand git.diffBuffers` | 打开分屏，左右对比当前编辑缓冲区与 Git 索引版本的差异。 |
+
+### 3. Git 状态列表与项目级操作（CocList）
+
+- **`<Space>g`**：以交互式浮窗打开项目变动文件列表（`:CocList --normal gstatus`）。
+  - 在列表中按回车直接打开变动文件。
+  - 按 `<Tab>` 键可选择进一步动作（如 Stage、Discard 等）。
+- **`:CocCommand git.browserOpen`**：在浏览器中直接打开当前行对应的 GitHub/GitLab 远程代码链接。
+- **`:CocCommand git.foldUnchanged`**：自动将未改动的代码行全部折叠，只把发生过变更的代码块凸显出来。
