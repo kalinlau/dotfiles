@@ -48,5 +48,6 @@
     "graphql"
   ],
   "eslint.rules.customizations": [],
-  "eslint.quiet": false
+  "eslint.quiet": false,
+  "git.addGBlameToVirtualText": true
 }

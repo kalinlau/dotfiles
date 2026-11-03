@@ -167,7 +167,7 @@ nmap <silent><nowait> ]C <Plug>(coc-git-nextconflict)
 " Show chunk diff preview at current cursor position
 nmap <silent> <leader>gp <Plug>(coc-git-chunkinfo)
 " Show commit info (git blame) for current line
-nmap <silent> <leader>gb <Plug>(coc-git-commitinfo)
+nmap <silent> <leader>gb <Plug>(coc-git-showblamedoc)
 " Undo current chunk changes
 nnoremap <silent> <leader>gu :CocCommand git.chunkUndo<CR>
 " Stage current chunk to index
