@@ -97,6 +97,12 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " ----- vim-over -----
 noremap <Leader>x :OverCommandLine<CR>
 
+" ----- vim-visual-multi -----
+let g:VM_leader = '\v'
+let g:VM_maps = {}
+let g:VM_maps['Add Cursor Down'] = '\vj'
+let g:VM_maps['Add Cursor Up']   = '\vk'
+
 " ----- coc-nvim -----
 "  Conquer of Completion
 "
