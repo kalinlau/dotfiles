@@ -17,7 +17,11 @@
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
     }
   },
+  "workspace.bottomUpFiletypes": ["python"],
   "workspace.rootPatterns": [
+    "uv.lock",
+    "pyproject.toml",
+    ".venv",
     "${cwd}/.idea",
     ".git",
     ".hg",

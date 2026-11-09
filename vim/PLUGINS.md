@@ -109,6 +109,7 @@ vim/pack/
   - `;`：查找并切换已打开的缓冲区（`:Buffers`）
   - `<leader>A`：全局代码内容检索（`:Rg`，调用 ripgrep）
   - `<leader>K`：快速检索光标下的词
+  - 弹窗分屏手势：`Alt-v` 垂直分屏、`Alt-s` 水平分屏、`<C-t>` 标签页打开（定制 `g:fzf_action` 避开终端 Ctrl-V 粘贴冲突）
 - **`nerdtree`**：`<leader>n` 打开/关闭目录树；`<leader>f` 在树中定位当前文件
 - **`vim-easymotion`**：
   - `<leader><leader>s`：输入两个字符，根据屏幕出现的字母标签直达目标位置

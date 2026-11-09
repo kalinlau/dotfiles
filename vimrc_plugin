@@ -11,6 +11,12 @@ set rtp+=~/.fzf
 " Modern floating window layout
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
 
+" Action mappings (Alt-v vsplit & Alt-s split to prevent terminal Ctrl-V paste conflicts)
+let g:fzf_action = {
+  \ 'alt-t': 'tab split',
+  \ 'alt-s':  'split',
+  \ 'alt-v':  'vsplit' }
+
 " Files and Buffers search
 nnoremap <C-p> :Files<CR>
 nnoremap ; :Buffers<CR>
