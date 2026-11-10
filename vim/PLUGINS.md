@@ -29,13 +29,14 @@ vim/pack/
 
 ## 一、代码补全与 LSP 诊断 (3 个)
 
-| 插件名称 | 仓库地址 | 核心功能简介 |
-| :--- | :--- | :--- |
-| **coc.nvim** | [neoclide/coc.nvim](https://github.com/neoclide/coc.nvim) | 提供语言服务器协议（LSP）支持，包含代码补全、定义跳转、重构、实时诊断、格式化以及 Git 状态集成。 |
-| **ultisnips** | [sirver/ultisnips](https://github.com/sirver/ultisnips) | 代码片段展开与编辑引擎，支持 Python 扩展语法。 |
-| **vim-snippets** | [honza/vim-snippets](https://github.com/honza/vim-snippets) | 社区维护的代码片段库（包含 UltiSnips 与 SnipMate 格式）。 |
+| 插件名称         | 仓库地址                                                    | 核心功能简介                                                                                     |
+| :--------------- | :---------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
+| **coc.nvim**     | [neoclide/coc.nvim](https://github.com/neoclide/coc.nvim)   | 提供语言服务器协议（LSP）支持，包含代码补全、定义跳转、重构、实时诊断、格式化以及 Git 状态集成。 |
+| **ultisnips**    | [sirver/ultisnips](https://github.com/sirver/ultisnips)     | 代码片段展开与编辑引擎，支持 Python 扩展语法。                                                   |
+| **vim-snippets** | [honza/vim-snippets](https://github.com/honza/vim-snippets) | 社区维护的代码片段库（包含 UltiSnips 与 SnipMate 格式）。                                        |
 
 ### 关键配置与快捷键
+
 - **补全与片段（Tab 链）**：
   - `<Tab>`：补全菜单打开时向下选词；在片段内跳到下一个占位符；光标前为空白时输入缩进；其他情况触发补全
   - `<S-Tab>`：补全菜单打开时向上选词；在片段内跳到上一个占位符
@@ -61,7 +62,9 @@ vim/pack/
   - `<space>c`：命令列表；`<space>e`：扩展管理；`<space>g`：改动文件列表（gstatus）
 
 ### 架构设计说明
+
 > [!NOTE]
+>
 > - **LSP 与语法检查**：由 `coc.nvim` 统一接管各语言的 Language Server、诊断提示以及格式化流程，避免多插件并存导致的保存竞态。
 > - **智能补全链**：通过 `coc-snippets` 联动 UltiSnips，将代码补全、片段展开和占位符跳转统一收敛于 `<Tab>` 键。
 
@@ -69,16 +72,17 @@ vim/pack/
 
 ## 二、文本编辑增强与文本对象 (6 个)
 
-| 插件名称 | 仓库地址 | 核心功能简介 |
-| :--- | :--- | :--- |
-| **auto-pairs** | [jiangmiao/auto-pairs](https://github.com/jiangmiao/auto-pairs) | 括号、引号等成对符号的自动闭合、自动删除与跳出。 |
-| **vim-surround** | [tpope/vim-surround](https://github.com/tpope/vim-surround) | 添加、修改和删除成对的环绕符号（括号、引号、HTML/XML 标签等）。 |
-| **nerdcommenter** | [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter) | 快速注释与解注释代码，支持多语言语法。 |
-| **vim-argwrap** | [FooSoft/vim-argwrap](https://github.com/FooSoft/vim-argwrap) | 函数参数列表、数组在单行与多行之间的换行展开与折叠。 |
-| **vim-visual-multi** | [mg979/vim-visual-multi](https://github.com/mg979/vim-visual-multi) | 多光标同时编辑支持。 |
-| **gundo.vim** | [sjl/gundo.vim](https://github.com/sjl/gundo.vim) | 可视化呈现 Vim 撤销树（Undo Tree），可回退至历史分支。 |
+| 插件名称             | 仓库地址                                                              | 核心功能简介                                                    |
+| :------------------- | :-------------------------------------------------------------------- | :-------------------------------------------------------------- |
+| **auto-pairs**       | [jiangmiao/auto-pairs](https://github.com/jiangmiao/auto-pairs)       | 括号、引号等成对符号的自动闭合、自动删除与跳出。                |
+| **vim-surround**     | [tpope/vim-surround](https://github.com/tpope/vim-surround)           | 添加、修改和删除成对的环绕符号（括号、引号、HTML/XML 标签等）。 |
+| **nerdcommenter**    | [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter) | 快速注释与解注释代码，支持多语言语法。                          |
+| **vim-argwrap**      | [FooSoft/vim-argwrap](https://github.com/FooSoft/vim-argwrap)         | 函数参数列表、数组在单行与多行之间的换行展开与折叠。            |
+| **vim-visual-multi** | [mg979/vim-visual-multi](https://github.com/mg979/vim-visual-multi)   | 多光标同时编辑支持。                                            |
+| **gundo.vim**        | [sjl/gundo.vim](https://github.com/sjl/gundo.vim)                     | 可视化呈现 Vim 撤销树（Undo Tree），可回退至历史分支。          |
 
 ### 关键配置与快捷键
+
 - **`auto-pairs`**：`g:AutoPairsFlyMode = 1`, `g:AutoPairsShortcutBackInsert = '<M-b>'`
 - **`vim-surround`**：
   - `cs"'`：将双引号改为单引号
@@ -94,16 +98,17 @@ vim/pack/
 
 ## 三、导航搜索与文件管理 (6 个)
 
-| 插件名称 | 仓库地址 | 核心功能简介 |
-| :--- | :--- | :--- |
-| **fzf.vim** | [junegunn/fzf.vim](https://github.com/junegunn/fzf.vim) | 基于 fzf 与 ripgrep 的模糊搜索套件，提供文件、缓冲区与代码全局检索。 |
-| **nerdtree** | [preservim/nerdtree](https://github.com/preservim/nerdtree) | 树状侧边栏文件管理器。 |
-| **vim-easymotion** | [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion) | 屏幕可视区域光标快速两键精准跳转。 |
-| **incsearch.vim** | [haya14busa/incsearch.vim](https://github.com/haya14busa/incsearch.vim) | 渐进式搜索体验增强，打字时即时高亮匹配项。 |
-| **incsearch-easymotion.vim** | [haya14busa/incsearch-easymotion.vim](https://github.com/haya14busa/incsearch-easymotion.vim) | 渐进式搜索与 EasyMotion 联动，回车后直接以字母标签跳转。 |
-| **vim-signature** | [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature) | 在侧边栏 SignColumn 显示与快速跳转 Vim Marks 行书签。 |
+| 插件名称                     | 仓库地址                                                                                      | 核心功能简介                                                         |
+| :--------------------------- | :-------------------------------------------------------------------------------------------- | :------------------------------------------------------------------- |
+| **fzf.vim**                  | [junegunn/fzf.vim](https://github.com/junegunn/fzf.vim)                                       | 基于 fzf 与 ripgrep 的模糊搜索套件，提供文件、缓冲区与代码全局检索。 |
+| **nerdtree**                 | [preservim/nerdtree](https://github.com/preservim/nerdtree)                                   | 树状侧边栏文件管理器。                                               |
+| **vim-easymotion**           | [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)                     | 屏幕可视区域光标快速两键精准跳转。                                   |
+| **incsearch.vim**            | [haya14busa/incsearch.vim](https://github.com/haya14busa/incsearch.vim)                       | 渐进式搜索体验增强，打字时即时高亮匹配项。                           |
+| **incsearch-easymotion.vim** | [haya14busa/incsearch-easymotion.vim](https://github.com/haya14busa/incsearch-easymotion.vim) | 渐进式搜索与 EasyMotion 联动，回车后直接以字母标签跳转。             |
+| **vim-signature**            | [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature)                             | 在侧边栏 SignColumn 显示与快速跳转 Vim Marks 行书签。                |
 
 ### 关键配置与快捷键
+
 - **`fzf.vim`**：
   - `<C-p>`：查找项目文件（`:Files`），带浮窗与内容预览
   - `;`：查找并切换已打开的缓冲区（`:Buffers`）
@@ -123,17 +128,17 @@ vim/pack/
 
 ## 四、界面美化与状态栏 (3 个)
 
-| 插件名称 | 仓库地址 | 核心功能简介 |
-| :--- | :--- | :--- |
-| **lightline.vim** | [itchyny/lightline.vim](https://github.com/itchyny/lightline.vim) | 轻量状态栏增强插件，无重型外部依赖。 |
+| 插件名称                 | 仓库地址                                                                                | 核心功能简介                                  |
+| :----------------------- | :-------------------------------------------------------------------------------------- | :-------------------------------------------- |
+| **lightline.vim**        | [itchyny/lightline.vim](https://github.com/itchyny/lightline.vim)                       | 轻量状态栏增强插件，无重型外部依赖。          |
 | **vim-colors-solarized** | [altercation/vim-colors-solarized](https://github.com/altercation/vim-colors-solarized) | Solarized 颜色方案（支持 256 色终端及 GUI）。 |
-| **vim-over** | [osyo-manga/vim-over](https://github.com/osyo-manga/vim-over) | 命令行文本替换实时交互式预览。 |
+| **vim-over**             | [osyo-manga/vim-over](https://github.com/osyo-manga/vim-over)                           | 命令行文本替换实时交互式预览。                |
 
 ### 关键配置与快捷键
+
 - **`lightline.vim`**：
   - 状态栏集成 `gitbranch`（通过 `LightlineGit()` 整合 `coc-git` 的分支名与改动统计 `+2 ~1 -0`）
   - 状态栏集成 `cocstatus`（LSP 状态）与 `CocRoot`（当前项目根目录路径）
-  - 状态栏右侧独立高亮呈现输入法状态 `[zh]` / `[en]`（由 `LightlineIME()` 驱动，退出插入模式自动切回英文）
   - 绑定 `CocStatusChange`, `CocDiagnosticChange`, `CocGitStatusChange` 与模式切换事件自动更新
 - **`vim-colors-solarized`**：在 `vimrc` 中为主力配色方案，并针对暗色终端背景定制了 `SignColumn` 与 `StatusLine` 样式
 - **`vim-over`**：`<leader>x` 呼出 `:OverCommandLine` 交互替换命令
@@ -144,41 +149,42 @@ vim/pack/
 
 为指定语言与文件类型提供精确的语法高亮（Syntax）、智能缩进（Indent）、文件类型识别（Ftdetect）以及编译配置支持。
 
-| 插件分类 | 插件名称 | 对应语言 / 文件类型 | 说明与功能亮点 |
-| :--- | :--- | :--- | :--- |
-| **Web 前端** | **vim-js** | JavaScript (现代规范) | 基于 ECMAScript 规范的高亮，专为现代语法设计，与 `vim-jsx-pretty` 协同。 |
-| | **vim-jsx-pretty** | React JSX / TSX | React JSX/TSX 标签高亮，与 `vim-js` 协同。 |
-| | **typescript-vim** | TypeScript | TypeScript 语法高亮与基础缩进支持。 |
-| | **vim-coffee-script**| CoffeeScript | CoffeeScript 高亮、编译命令与缩进。 |
-| | **vim-liquid** | Liquid (Shopify/Jekyll)| Liquid 模板语法高亮。 |
-| | **smarty.vim** | Smarty (PHP 模板) | PHP Smarty 模板引擎语法高亮。 |
-| **通用 / 系统**| **rust.vim** | Rust | Rust 官方支持插件，提供语法高亮、格式化（`:RustFmt`）与测试。 |
-| | **vim-markdown** | Markdown | Markdown 扩展语法高亮，支持代码块多语言嵌套与公式。 |
-| | **vim-json** | JSON | JSON 高亮支持，提供语法错误标记及隐藏双引号（conceal）功能。 |
-| | **vim-toml** | TOML | TOML 配置文件语法高亮与缩进。 |
-| | **vimtex** | LaTeX / TeX | LaTeX 工具链支持（语法高亮、目录跳转、编译支持）。 |
-| **函数式与专用**| **haskell-vim** | Haskell | 现代 Haskell 语法高亮、Cabal 与缩进支持。 |
-| | **vim-scala** | Scala | Scala 语法支持与 ctags 符号支持。 |
-| | **vim-racket** | Racket / Scheme | Racket 方言的 S-表达式缩进与高亮。 |
-| | **vim-solidity** | Solidity | 以太坊智能合约开发语言语法高亮。 |
-| | **vim-smt2** | SMT-LIB 2 | SMT-LIB v2 形式化验证与约束求解器脚本语法高亮。 |
+| 插件分类         | 插件名称              | 对应语言 / 文件类型     | 说明与功能亮点                                                           |
+| :--------------- | :-------------------- | :---------------------- | :----------------------------------------------------------------------- |
+| **Web 前端**     | **vim-js**            | JavaScript (现代规范)   | 基于 ECMAScript 规范的高亮，专为现代语法设计，与 `vim-jsx-pretty` 协同。 |
+|                  | **vim-jsx-pretty**    | React JSX / TSX         | React JSX/TSX 标签高亮，与 `vim-js` 协同。                               |
+|                  | **typescript-vim**    | TypeScript              | TypeScript 语法高亮与基础缩进支持。                                      |
+|                  | **vim-coffee-script** | CoffeeScript            | CoffeeScript 高亮、编译命令与缩进。                                      |
+|                  | **vim-liquid**        | Liquid (Shopify/Jekyll) | Liquid 模板语法高亮。                                                    |
+|                  | **smarty.vim**        | Smarty (PHP 模板)       | PHP Smarty 模板引擎语法高亮。                                            |
+| **通用 / 系统**  | **rust.vim**          | Rust                    | Rust 官方支持插件，提供语法高亮、格式化（`:RustFmt`）与测试。            |
+|                  | **vim-markdown**      | Markdown                | Markdown 扩展语法高亮，支持代码块多语言嵌套与公式。                      |
+|                  | **vim-json**          | JSON                    | JSON 高亮支持，提供语法错误标记及隐藏双引号（conceal）功能。             |
+|                  | **vim-toml**          | TOML                    | TOML 配置文件语法高亮与缩进。                                            |
+|                  | **vimtex**            | LaTeX / TeX             | LaTeX 工具链支持（语法高亮、目录跳转、编译支持）。                       |
+| **函数式与专用** | **haskell-vim**       | Haskell                 | 现代 Haskell 语法高亮、Cabal 与缩进支持。                                |
+|                  | **vim-scala**         | Scala                   | Scala 语法支持与 ctags 符号支持。                                        |
+|                  | **vim-racket**        | Racket / Scheme         | Racket 方言的 S-表达式缩进与高亮。                                       |
+|                  | **vim-solidity**      | Solidity                | 以太坊智能合约开发语言语法高亮。                                         |
+|                  | **vim-smt2**          | SMT-LIB 2               | SMT-LIB v2 形式化验证与约束求解器脚本语法高亮。                          |
 
 ---
 
 ## 六、外部工具与工作流集成 (8 个)
 
-| 插件名称 | 仓库地址 | 核心功能简介 |
-| :--- | :--- | :--- |
-| **vim-git** | [tpope/vim-git](https://github.com/tpope/vim-git) | 提供 Git commit 提交信息、rebase、config、gitignore 等文件的语法高亮与格式。 |
-| **editorconfig-vim** | [editorconfig/editorconfig-vim](https://github.com/editorconfig/editorconfig-vim) | 解析项目根目录下的 `.editorconfig` 文件，统一缩进风格、换行符和编码。 |
-| **vim-tmux** | [tmux-plugins/vim-tmux](https://github.com/tmux-plugins/vim-tmux) | `tmux.conf` 配置文件的语法高亮与补全支持。 |
-| **vim-vagrant** | [hashivim/vim-vagrant](https://github.com/hashivim/vim-vagrant) | Vagrantfile 语法高亮及在 Vim 内执行 Vagrant 命令封装。 |
-| **vim-bundler** | [tpope/vim-bundler](https://github.com/tpope/vim-bundler) | Ruby Bundler 集成，支持 `:Bundle` 及在 Gemfile 中直接 `gf` 跳转到 gem 源码。 |
-| **vim-emmet** | [mattn/emmet-vim](https://github.com/mattn/emmet-vim) | 前端 HTML/CSS 缩写代码展开生成工具。 |
-| **gist-vim** | [mattn/gist-vim](https://github.com/mattn/gist-vim) | 在 Vim 内直接创建、更新与浏览 GitHub Gist。 |
-| **webapi-vim** | [mattn/webapi-vim](https://github.com/mattn/webapi-vim) | 底层工具库：提供 HTTP 请求与 JSON/XML 编解码，供 `gist-vim` 与 `vim-emmet` 使用。 |
+| 插件名称             | 仓库地址                                                                          | 核心功能简介                                                                      |
+| :------------------- | :-------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------- |
+| **vim-git**          | [tpope/vim-git](https://github.com/tpope/vim-git)                                 | 提供 Git commit 提交信息、rebase、config、gitignore 等文件的语法高亮与格式。      |
+| **editorconfig-vim** | [editorconfig/editorconfig-vim](https://github.com/editorconfig/editorconfig-vim) | 解析项目根目录下的 `.editorconfig` 文件，统一缩进风格、换行符和编码。             |
+| **vim-tmux**         | [tmux-plugins/vim-tmux](https://github.com/tmux-plugins/vim-tmux)                 | `tmux.conf` 配置文件的语法高亮与补全支持。                                        |
+| **vim-vagrant**      | [hashivim/vim-vagrant](https://github.com/hashivim/vim-vagrant)                   | Vagrantfile 语法高亮及在 Vim 内执行 Vagrant 命令封装。                            |
+| **vim-bundler**      | [tpope/vim-bundler](https://github.com/tpope/vim-bundler)                         | Ruby Bundler 集成，支持 `:Bundle` 及在 Gemfile 中直接 `gf` 跳转到 gem 源码。      |
+| **vim-emmet**        | [mattn/emmet-vim](https://github.com/mattn/emmet-vim)                             | 前端 HTML/CSS 缩写代码展开生成工具。                                              |
+| **gist-vim**         | [mattn/gist-vim](https://github.com/mattn/gist-vim)                               | 在 Vim 内直接创建、更新与浏览 GitHub Gist。                                       |
+| **webapi-vim**       | [mattn/webapi-vim](https://github.com/mattn/webapi-vim)                           | 底层工具库：提供 HTTP 请求与 JSON/XML 编解码，供 `gist-vim` 与 `vim-emmet` 使用。 |
 
 ### 关键配置与快捷键
+
 - **`vim-emmet`**：
   - `let g:user_emmet_leader_key='<Tab>'`
   - 针对 `java, html, css, markdown, xml, xsl, scss, sass` 自动激活
