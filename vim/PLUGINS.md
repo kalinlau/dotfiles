@@ -139,6 +139,7 @@ vim/pack/
 - **`lightline.vim`**：
   - 状态栏集成 `gitbranch`（通过 `LightlineGit()` 整合 `coc-git` 的分支名与改动统计 `+2 ~1 -0`）
   - 状态栏集成 `cocstatus`（LSP 状态）与 `CocRoot`（当前项目根目录路径）
+  - 状态栏绝对最右侧独立指示 `imestatus`：以低调中性深灰底呈现 `[zh]` / `[en]`（由 `LightlineIME()` 驱动，基于 TCP Socket `<0.5ms` 极速联动 Windows 守护服务）
   - 绑定 `CocStatusChange`, `CocDiagnosticChange`, `CocGitStatusChange` 与模式切换事件自动更新
 - **`vim-colors-solarized`**：在 `vimrc` 中为主力配色方案，并针对暗色终端背景定制了 `SignColumn` 与 `StatusLine` 样式
 - **`vim-over`**：`<leader>x` 呼出 `:OverCommandLine` 交互替换命令

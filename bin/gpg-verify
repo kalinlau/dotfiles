@@ -1,0 +1,161 @@
+#!/usr/bin/env zsh
+# ==============================================================================
+# GPG-Verify: General-Purpose Anti-Tamper Verification & Integrity Checker
+#
+# File:        bin/gpg-verify
+# Description: Verifies the authenticity and cryptographic integrity of files
+#              against a GPG-signed manifest (e.g. SHA256SUMS.asc).
+# Author:      Jialin Liu (LAU Kalin) <laukalin24@gmail.com>
+# License:     MIT License
+# ==============================================================================
+
+setopt extended_glob null_glob
+
+# Terminal color codes
+typeset -r RED=$'\033[0;31m'
+typeset -r GREEN=$'\033[0;32m'
+typeset -r YELLOW=$'\033[0;33m'
+typeset -r BLUE=$'\033[0;34m'
+typeset -r CYAN=$'\033[0;36m'
+typeset -r BOLD=$'\033[1m'
+typeset -r RESET=$'\033[0m'
+
+show_help() {
+    cat << EOF
+${BOLD}${CYAN}GPG-Verify${RESET} - Anti-Tamper Verification & Integrity Checker
+
+${BOLD}USAGE:${RESET}
+    gpg-verify [OPTIONS] [MANIFEST_PATTERNS...]
+
+${BOLD}DESCRIPTION:${RESET}
+    1. Verifies the OpenPGP digital signature of the manifest to authenticate the signer.
+    2. Verifies the SHA-256 hash of each listed file to guarantee zero unauthorized modifications.
+
+${BOLD}OPTIONS:${RESET}
+    -h, --help    Show this help message and exit.
+
+${BOLD}EXAMPLES:${RESET}
+    # Verify default manifest in current directory (./SHA256SUMS.asc)
+    gpg-verify
+
+    # Verify a specific manifest
+    gpg-verify bin/hosts/win11/SHA256SUMS.asc
+
+    # Verify all signed manifests recursively across workspace
+    gpg-verify "**/SHA256SUMS.asc"
+EOF
+}
+
+# Parse options
+typeset -a manifest_patterns=()
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            manifest_patterns+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# Default to ./SHA256SUMS.asc if no patterns specified
+if [[ ${#manifest_patterns} -eq 0 ]]; then
+    manifest_patterns+=("./SHA256SUMS.asc")
+fi
+
+# Expand manifest patterns
+typeset -a target_manifests=()
+for pattern in "${manifest_patterns[@]}"; do
+    typeset -a matched=( $~pattern )
+    for item in "${matched[@]}"; do
+        if [[ -f "$item" ]]; then
+            target_manifests+=("$item")
+        fi
+    done
+done
+
+target_manifests=( ${(u)target_manifests} )
+
+if [[ ${#target_manifests} -eq 0 ]]; then
+    print -u2 "${RED}[ERROR] No signed manifest found matching pattern(s): ${manifest_patterns[*]}${RESET}"
+    exit 1
+fi
+
+typeset -i total_manifests=${#target_manifests}
+typeset -i passed_manifests=0
+typeset -i failed_manifests=0
+
+print "${CYAN}${BOLD}===================================================${RESET}"
+print "${CYAN}${BOLD}[GPG-Verify] Anti-Tamper Verification Suite${RESET}"
+print "${CYAN}${BOLD}===================================================${RESET}"
+
+for manifest in "${target_manifests[@]}"; do
+    print "${BLUE}${BOLD}[MANIFEST]${RESET} ${manifest}"
+    typeset manifest_dir="$(dirname "$manifest")"
+    typeset manifest_name="$(basename "$manifest")"
+
+    # Step 1: Verify GPG digital signature
+    print "  ${YELLOW}[1/2] Verifying GPG Signature...${RESET}"
+    typeset gpg_out
+    if gpg_out=$(gpg --verify "$manifest" 2>&1); then
+        # Extract signer info
+        typeset signer_line=$(echo "$gpg_out" | grep -E "Good signature from" | head -n 1)
+        if [[ -n "$signer_line" ]]; then
+            print "  ${GREEN}✓ GPG Signature Valid:${RESET} ${signer_line#*Good signature from }"
+        else
+            print "  ${GREEN}✓ GPG Signature Valid${RESET}"
+        fi
+    else
+        print "  ${RED}✗ [FAILED] GPG signature verification FAILED!${RESET}"
+        print "    $gpg_out"
+        failed_manifests+=1
+        print ""
+        continue
+    fi
+
+    # Step 2: Verify file hashes
+    print "  ${YELLOW}[2/2] Verifying SHA-256 Checksums...${RESET}"
+    typeset sha_out
+    typeset -i check_exit=0
+    # Execute sha256sum inside the manifest directory for proper relative path resolution
+    # Filter checksum lines to exclude PGP headers and armor blocks
+    sha_out=$(cd "$manifest_dir" && grep -E '^[0-9a-fA-F]{64}[[:space:]]' "$manifest_name" | sha256sum --check --strict 2>&1) || check_exit=$?
+
+    if [[ $check_exit -eq 0 ]]; then
+        # Print each OK line with green mark
+        while IFS= read -r line; do
+            if [[ -n "$line" ]]; then
+                print "    ${GREEN}✓${RESET} $line"
+            fi
+        done <<< "$sha_out"
+        print "  ${GREEN}${BOLD}[RESULT] Manifest Integrity: 100% MATCH (No unauthorized changes)${RESET}"
+        passed_manifests+=1
+    else
+        # Print details including failed files
+        while IFS= read -r line; do
+            if [[ "$line" == *": OK"* ]]; then
+                print "    ${GREEN}✓${RESET} $line"
+            elif [[ -n "$line" ]]; then
+                print "    ${RED}✗ $line${RESET}"
+            fi
+        done <<< "$sha_out"
+        print "  ${RED}${BOLD}[RESULT] Integrity check FAILED! Files have been tampered with or are missing!${RESET}"
+        failed_manifests+=1
+    fi
+    print ""
+done
+
+print "${CYAN}${BOLD}=================== Summary =======================${RESET}"
+print "  Total Manifests Verified: ${total_manifests}"
+print "  Passed:                   ${GREEN}${passed_manifests}${RESET}"
+if [[ $failed_manifests -gt 0 ]]; then
+    print "  Failed:                   ${RED}${failed_manifests}${RESET}"
+    print "${RED}${BOLD}[ALERT] Verification failed for one or more files!${RESET}"
+    exit 1
+else
+    print "${GREEN}${BOLD}[ALL CLEAR] All cryptographic signatures and checksums are verified!${RESET}"
+    exit 0
+fi

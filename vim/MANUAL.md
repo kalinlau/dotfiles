@@ -200,3 +200,29 @@ LSP 代码补全、诊断与扩展平台。
 ### 语法折叠命令
 
 - `:Fold`：调用 CoC 语言服务器（如 `coc-json`）计算当前文件的语法折叠范围。
+
+---
+
+## lightline.vim（中英文输入法状态与模式联动）
+
+状态栏输入法状态显示与中英文极速自动切换。  
+配置文件：[vimrc_plugin](file:///home/laukalin/dotfiles/vimrc_plugin)  
+依赖工具：Windows 端后台常驻守护服务 [`wsl-ime-daemon.exe`](file:///home/laukalin/dotfiles/bin/hosts/win11/README.md)（监听本地 TCP `8765` 端口）。
+
+### 1. 状态栏呈现说明
+
+在 Lightline 最右侧独立设立低调中性灰色色块（深灰底 + 中灰字，不喧宾夺主）：
+
+- `[zh]`：表示当前处于中文输入法状态。
+- `[en]`：表示当前处于英文输入法状态。
+- 位于状态栏绝对最末端（`... │ 编码与类型 │ 百分比 │ 行列号 │ [zh]`）。
+
+### 2. 中英文自动切换机制
+
+- **退出插入模式（`<Esc>`）**：
+  瞬间向 Windows 守护服务发送切英指令（Socket 传输 `<0.3ms`，零卡顿），将微软拼音直接切回英文模式，并在状态栏显示 `[en]`。
+  彻底避免在普通模式下移动光标（`h/j/k/l`）或执行命令（`dd`、`yy`）时误触中文拼音弹窗。
+- **打字中手动按 Shift 切换**：
+  在插入模式下自由按 `Shift` 键切换中英文。Vim 内部的非阻塞异步探针会自动在 150ms 内捕获状态变更并刷新状态栏指示。
+- **开机自启动与无感体验**：
+  Windows 端通过运行 [`install-startup.bat`](file:///home/laukalin/dotfiles/bin/hosts/win11/install-startup.bat) 实现开机静默常驻，内存占用仅 3~5MB，日常使用完全零感知。

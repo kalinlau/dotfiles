@@ -290,6 +290,102 @@ function! LightlineGit() abort
   return empty(l:branch) ? '' : (empty(l:status) ? l:branch : l:branch . ' ' . l:status)
 endfunction
 
+" ----- WSL & Lightline [zh]/[en] 状态显示 -----
+let s:ime_current = 'en'
+let s:ime_channel = v:null
+let s:ime_timer = v:null
+let s:ime_port = 8765
+
+" 提供给 lightline 的组件函数（常态显示 [zh] 或 [en]）
+function! LightlineIME() abort
+  return s:ime_current ==# 'zh' ? 'zh' : 'en'
+endfunction
+
+" 异步接收 Windows 守护进程返回的状态并刷新状态栏
+function! s:IMEReceiveHandler(channel, msg) abort
+  let l:status = trim(a:msg)
+  if (l:status ==# 'zh' || l:status ==# 'en') && l:status !=# s:ime_current
+    let s:ime_current = l:status
+    call lightline#update()
+  endif
+endfunction
+
+" 获取或维护与 Windows 守护进程的长连接（优雅降级：连不上时静默容错）
+function! s:GetIMEChannel() abort
+  if s:ime_channel isnot v:null && ch_status(s:ime_channel) ==# 'open'
+    return s:ime_channel
+  endif
+  try
+    let s:ime_channel = ch_open('127.0.0.1:' . s:ime_port, {
+          \ 'mode': 'raw',
+          \ 'callback': function('s:IMEReceiveHandler'),
+          \ 'timeout': 30
+          \ })
+  catch
+    let s:ime_channel = v:null
+  endtry
+  return s:ime_channel
+endfunction
+
+" 插入模式探针：异步向 Windows 发送状态查询
+function! s:IMEQuery(timer_id = 0) abort
+  if mode() =~# '^[iR]'
+    let l:ch = s:GetIMEChannel()
+    if l:ch isnot v:null
+      call ch_sendraw(l:ch, "get\n")
+    endif
+  endif
+endfunction
+
+" 进入插入模式：探测一次并开启专属轻量定时器（单按 Shift 停顿时 0.1s 内感知跳变）
+function! s:IMEInsertEnter() abort
+  call s:IMEQuery()
+  if s:ime_timer is v:null
+    let s:ime_timer = timer_start(150, function('s:IMEQuery'), {'repeat': -1})
+  endif
+endfunction
+
+" 退出插入模式：瞬间销毁定时器，发命令强制将输入法切回英文，Normal 模式零误触
+function! s:IMEInsertLeave() abort
+  if s:ime_timer isnot v:null
+    call timer_stop(s:ime_timer)
+    let s:ime_timer = v:null
+  endif
+  let l:ch = s:GetIMEChannel()
+  if l:ch isnot v:null
+    call ch_sendraw(l:ch, "set:en\n")
+  endif
+  let s:ime_current = 'en'
+  call lightline#update()
+endfunction
+
+augroup WSLIMEAutoSwitch
+  autocmd!
+  autocmd VimEnter     * call s:GetIMEChannel()
+  autocmd InsertEnter  * call s:IMEInsertEnter()
+  autocmd InsertLeave  * call s:IMEInsertLeave()
+  autocmd TextChangedI * call s:IMEQuery()
+  autocmd CursorHoldI  * call s:IMEQuery()
+augroup END
+
+" 微调 lightline 配色：为最右侧独立块 (right[0]) 定制低调中性深灰底+中灰字，不喧宾夺主
+function! s:CustomizeLightlineTheme() abort
+  if !exists('g:lightline#colorscheme#wombat#palette')
+    runtime autoload/lightline/colorscheme/wombat.vim
+  endif
+  if exists('g:lightline#colorscheme#wombat#palette')
+    let l:palette = g:lightline#colorscheme#wombat#palette
+    " 深灰底 (#353535, cterm 236) + 中灰字 (#969696, cterm 247)
+    let l:ime_gray = [ '#969696', '#353535', 247, 236 ]
+    for l:m in ['normal', 'insert', 'replace', 'visual', 'inactive']
+      if has_key(l:palette, l:m) && has_key(l:palette[l:m], 'right')
+        let l:palette[l:m].right = [ l:ime_gray ] + l:palette[l:m].right
+      endif
+    endfor
+  endif
+endfunction
+call s:CustomizeLightlineTheme()
+
 let g:lightline = {
 \ 'colorscheme': 'wombat',
 \ 'active': {

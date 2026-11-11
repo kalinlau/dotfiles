@@ -1,0 +1,206 @@
+#!/usr/bin/env zsh
+# ==============================================================================
+# GPG-Sign: General-Purpose Anti-Tamper Checksum & GPG Signing Tool
+#
+# File:        bin/gpg-sign
+# Description: Computes cryptographic hashes (default SHA-256) for specified files
+#              (with full glob support) and wraps the manifest in an authentic
+#              OpenPGP Cleartext Signature (SHA256SUMS.asc) using GnuPG.
+# Author:      Jialin Liu (LAU Kalin) <laukalin24@gmail.com>
+# License:     MIT License
+# ==============================================================================
+
+# Enable Zsh advanced globbing features
+setopt extended_glob null_glob
+
+# Terminal color codes
+typeset -r RED=$'\033[0;31m'
+typeset -r GREEN=$'\033[0;32m'
+typeset -r YELLOW=$'\033[0;33m'
+typeset -r BLUE=$'\033[0;34m'
+typeset -r CYAN=$'\033[0;36m'
+typeset -r BOLD=$'\033[1m'
+typeset -r RESET=$'\033[0m'
+
+# Default configuration
+typeset output_path=""
+typeset gpg_key=""
+typeset -a input_patterns=()
+typeset default_manifest="SHA256SUMS.asc"
+
+# Display usage instructions
+show_help() {
+    cat << EOF
+${BOLD}${CYAN}GPG-Sign${RESET} - General-Purpose Anti-Tamper Checksum & GPG Signing Tool
+
+${BOLD}USAGE:${RESET}
+    gpg-sign [OPTIONS] <FILE_PATTERNS...>
+
+${BOLD}DESCRIPTION:${RESET}
+    Generates SHA-256 cryptographic hashes for the specified files and produces
+    an OpenPGP cleartext signed manifest (default: SHA256SUMS.asc). Guarantees
+    authenticity and proves files have not been modified since signing.
+
+${BOLD}OPTIONS:${RESET}
+    -o, --output <PATH>     Specify output manifest path or target directory.
+                            If a directory is given, '${default_manifest}' is created inside it.
+                            (Default: './${default_manifest}')
+    -u, --local-user <KEY>  Specify GPG key ID or email to sign with.
+    -h, --help              Show this help message and exit.
+
+${BOLD}EXAMPLES:${RESET}
+    # Sign all executables and scripts in bin/hosts/win11/
+    gpg-sign "bin/hosts/win11/*.(exe|bat|ps1)" -o bin/hosts/win11/
+
+    # Sign all shell scripts recursively in project
+    gpg-sign "**/*.{sh,zsh}" -o SHA256SUMS.asc
+
+    # Sign using a specific GPG key
+    gpg-sign -u 0x61279CDF7E3E5A5F -o release.sha256.asc bin/**/*(.)
+EOF
+}
+
+# Parse command line options
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        -o|--output)
+            if [[ -n "$2" && "$2" != -* ]]; then
+                output_path="$2"
+                shift 2
+            else
+                print -u2 "${RED}[ERROR] Option $1 requires an argument.${RESET}"
+                exit 1
+            fi
+            ;;
+        -u|--local-user)
+            if [[ -n "$2" && "$2" != -* ]]; then
+                gpg_key="$2"
+                shift 2
+            else
+                print -u2 "${RED}[ERROR] Option $1 requires an argument.${RESET}"
+                exit 1
+            fi
+            ;;
+        *)
+            input_patterns+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# Require at least one input pattern or file
+if [[ ${#input_patterns} -eq 0 ]]; then
+    print -u2 "${RED}[ERROR] No input files or glob patterns specified.${RESET}"
+    print -u2 "Run ${BOLD}gpg-sign --help${RESET} for usage information."
+    exit 1
+fi
+
+# Ensure GnuPG and sha256sum are available
+if ! command -v gpg >/dev/null 2>&1; then
+    print -u2 "${RED}[ERROR] 'gpg' command not found. Please install gnupg.${RESET}"
+    exit 1
+fi
+
+if ! command -v sha256sum >/dev/null 2>&1; then
+    print -u2 "${RED}[ERROR] 'sha256sum' command not found.${RESET}"
+    exit 1
+fi
+
+# Resolve output manifest path
+typeset target_file=""
+typeset target_dir=""
+
+if [[ -z "$output_path" ]]; then
+    target_file="./${default_manifest}"
+    target_dir="."
+elif [[ -d "$output_path" || "$output_path" == */ ]]; then
+    target_dir="${output_path%/}"
+    target_file="${target_dir}/${default_manifest}"
+else
+    target_file="$output_path"
+    target_dir="$(dirname "$output_path")"
+fi
+
+# Expand input patterns (supports quoted and unquoted globs)
+typeset -a expanded_files=()
+for pattern in "${input_patterns[@]}"; do
+    # Evaluate glob within Zsh
+    typeset -a matched=( $~pattern )
+    for item in "${matched[@]}"; do
+        # Include regular files only; avoid directories and self
+        if [[ -f "$item" && "$item" != "$target_file" && "$item" != *".asc" ]]; then
+            expanded_files+=("$item")
+        fi
+    done
+done
+
+# Deduplicate and sort file list
+expanded_files=( ${(u)expanded_files} )
+typeset -a sorted_files=( ${(o)expanded_files} )
+
+if [[ ${#sorted_files} -eq 0 ]]; then
+    print -u2 "${RED}[ERROR] No matching regular files found for given patterns.${RESET}"
+    exit 1
+fi
+
+print "${CYAN}${BOLD}===================================================${RESET}"
+print "${CYAN}${BOLD}[GPG-Sign] Anti-Tamper Checksum & Signature Generator${RESET}"
+print "${CYAN}${BOLD}===================================================${RESET}"
+print "${BLUE}[INFO] Target Manifest:${RESET} ${target_file}"
+print "${BLUE}[INFO] Files to sign:${RESET}   ${#sorted_files} file(s)"
+print ""
+
+# Ensure target directory exists
+if [[ ! -d "$target_dir" ]]; then
+    mkdir -p "$target_dir"
+fi
+
+# Generate temporary hash file
+typeset temp_hash="$(mktemp -t sha256sums.XXXXXX)"
+trap "rm -f '$temp_hash'" EXIT INT TERM
+
+# Compute SHA-256 relative to target directory if appropriate
+print "${YELLOW}[1/2] Computing SHA-256 hashes...${RESET}"
+for f in "${sorted_files[@]}"; do
+    # If output directory matches file path prefix, use relative path for portability
+    if [[ "$target_dir" != "." && "$f" == "${target_dir}"/* ]]; then
+        typeset rel_f="${f#${target_dir}/}"
+        (cd "$target_dir" && sha256sum "$rel_f") >> "$temp_hash"
+    else
+        sha256sum "$f" >> "$temp_hash"
+    fi
+    print "  ${GREEN}✓${RESET} ${f}"
+done
+
+print ""
+print "${YELLOW}[2/2] Generating OpenPGP Cleartext Signature with GnuPG...${RESET}"
+
+# Ensure GPG_TTY is set for curses pinentry in interactive terminals
+if [[ -t 0 && -z "$GPG_TTY" ]]; then
+    export GPG_TTY=$(tty 2>/dev/null)
+fi
+
+# Build GPG command
+typeset -a gpg_cmd=( gpg --yes --armor --clear-sign )
+if [[ -n "$gpg_key" ]]; then
+    gpg_cmd+=( --local-user "$gpg_key" )
+fi
+gpg_cmd+=( --output "$target_file" "$temp_hash" )
+
+# Execute GPG signature (if pinentry is required, run interactively)
+if "${gpg_cmd[@]}"; then
+    print ""
+    print "${GREEN}${BOLD}[SUCCESS] Manifest created and signed successfully!${RESET}"
+    print "  ${BOLD}Manifest:${RESET} ${target_file}"
+    print "  ${BOLD}Verify with:${RESET} gpg-verify ${target_file}"
+    print "${CYAN}${BOLD}===================================================${RESET}"
+else
+    typeset exit_code=$?
+    print -u2 ""
+    print -u2 "${RED}${BOLD}[ERROR] GPG signing failed with exit code ${exit_code}.${RESET}"
+    exit $exit_code
+fi
