@@ -2,7 +2,7 @@
     link:
       create: true
       relink: true
-- clean: ['~', '~/.config', '~/.cache']
+- clean: ["~", "~/.config", "~/.cache"]
 - link:
     ~/.agignore:
     ~/.aria2/aria2.conf:
@@ -13,7 +13,7 @@
     ~/.config/google-java-style.xml:
     ~/.config/yapf/style: yapf.conf
     ~/.config/emmet/snippets_custom.json:
-    ~/.dotfiles: ''
+    ~/.dotfiles: ""
     ~/.emacs.d:
     ~/.emacs:
     ~/.fzf:
@@ -52,11 +52,3 @@
     - git submodule sync --recursive
     # the following have to run after linking ~/.gitconfig
     - git update-submodules
-    #- >
-    #git cleanall -f
-    #emacs.d/vendor/
-    #irssi/scripts/vendor/
-    #jupyter/nbextensions/
-    #shell/plugins/
-    #vim/pack/vendor/start/
-    #zsh/plugins/
