@@ -1,0 +1,27 @@
+{
+  "name": "@kalinlau/worklog-skill",
+  "version": "1.0.0",
+  "description": "Agent skill for managing, structuring, and appending to WORKLOG.md in reverse chronological order",
+  "main": "SKILL.md",
+  "keywords": [
+    "agentskills",
+    "agent-skills",
+    "worklog",
+    "antigravity",
+    "productivity",
+    "devtools"
+  ],
+  "author": "LAU Kalin <laukalin24@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kalinlau/worklog-skill.git"
+  },
+  "files": [
+    "SKILL.md",
+    "scripts/",
+    "templates/",
+    "README.md",
+    "LICENSE"
+  ]
+}
