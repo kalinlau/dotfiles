@@ -3,6 +3,8 @@
   "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveTimeout": 200,
   "coc.preferences.renameFillCurrent": false,
+  "prettier.printWidth": 80,
+  "prettier.proseWrap": "always",
   "diagnostic.virtualText": true,
   "extensions.updateCheck": "weekly",
   "fileSystemWatch.ignoredFolders": ["**/.git/**"],
